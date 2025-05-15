@@ -1,0 +1,56 @@
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    min-width: 20px;
+    text-align: center;
+}
+
+
+.hover-list {
+    display: none;
+    position: absolute;
+    top: 70%;
+    left: 83%;
+    /* right: 10; */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    width: 220px;
+    opacity: 95%;
+  }
+
+  .button-container:hover .hover-list {
+    display: block;
+  }
+
+  .hover-list li {
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .hover-list li:hover {
+    background-color: #eee;
+  }
+
+ li a:hover {
+  color: white !important;
+ }
+ .navbar-collapse input{ 
+  border-radius:40px !important ;
+  border: 1px solid rgb(49, 49, 49) ;
+  opacity: 65%;
+ }
+ .navbar-collapse input:hover{
+  opacity: 90%;
+ }
+ 

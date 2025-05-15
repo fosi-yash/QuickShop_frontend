@@ -1,0 +1,67 @@
+.login {
+
+    background-color: #e3d4b9;
+    height: 100vh;
+}
+
+.content {
+    height: 350px;
+    width: 450px;
+    border: 2px solid white;
+    padding: 20px 20px 10px;
+    box-shadow: 0 0 8px 2px rgb(255, 255, 255);
+    margin-top: 8%;
+    border-radius: 5%;
+    background-color: rgba(245, 245, 245, 0.2);
+    opacity: 90%;
+
+}
+
+.content input {
+
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.login-form {
+    width: 350px;
+    margin: 50px auto auto auto;
+}
+
+.login-btn {
+    background-color: rgba(255, 166, 0, 0.7);
+}
+
+.login-btn:hover {
+    background-color: orange;
+}
+
+.user-btn {
+    border:none;
+    width: 125px;
+    padding: 10px none;
+    border-radius: 20%;
+    background: none;
+    height: 30px;
+    border-bottom: 2px solid rgb(255, 187, 0);
+    box-shadow: 0px 0px 8px 0px rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: none none 2px none rgb(255, 255, 255);
+}
+.user_btn{
+    
+    
+    
+     width: 125px;
+    padding: 10px none;
+    background: none;
+    height: 30px;
+    border-radius: 20%;
+}
+
+.user_btn:hover {
+    height: 29px;
+    border-bottom: 2px solid rgb(255, 187, 0);
+    box-shadow: 0px 0px 8px 0px rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.6);
+    /* box-shadow: none none 2px none rgb(255, 255, 255); */
+}

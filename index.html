@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>paypal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+        .header {
+            text-align: center;
+
+            margin: 0 0px;
+            height: 80px;
+            display: block;
+            position: sticky;
+            /* osition: absolute; */
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #root {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+
+
+        h1 {
+            text-align: center;
+            padding: 15px;
+        }
+
+
+        #paypal {
+            margin: 100px auto;
+            width: 35%;
+            z-index: 5;
+            position: relative;
+        }
+
+
+        .card-img-top {
+            height: 200px;
+            width: 200px;
+            border-radius: 10%;
+            margin-right: 50px;
+        }
+
+        .full {
+
+            background-color: rgb(206, 230, 250);
+            width: 70%;
+            height: 280px;
+        }
+
+        .main-card {
+            width: 100%;
+            height: 210px;
+        }
+
+        .card-title {
+            width: max-content;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            width: 150px;
+            height: 50px;
+            left: 45%;
+            right: 50%;
+            position: absolute;
+        }
+
+        #lable {
+            width: 200px;
+            margin-left: 20px;
+            margin-bottom: 12px;
+            right: 20%;
+        }
+
+        .modal-content {
+            text-align: center;
+            margin: auto auto;
+
+
+        }
+
+        .modal-image {
+            margin: auto auto;
+            height: 500px;
+            width: 500px;
+        }
+
+        .footer {
+
+            bottom: 0;
+            left: 0;
+            width: 100%;
+
+            height: 80px;
+            text-align: center;
+            padding-top: 20px;
+            color: white;
+            z-index: 1000;
+        }
+
+        .header,
+        .footer {
+            background-color: burlywood;
+
+        }
+
+        #paypal-div {
+            max-width: 500px;
+            align-items: center;
+            margin: auto auto;
+
+        }
+
+        .img {
+            width: 350px;
+            height: 200px;
+            /* border: 1px solid black; */
+            border-radius: 5%;
+            padding: -50px;
+            padding: 5px;
+
+            /* margin-left: 100px; */
+        }
+
+       
+
+        .buy {
+            background-color: rgb(255, 47, 47);
+            border-radius: 20px;
+            border: 1px solid white;
+            padding: 8px;
+            width: 150px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.87);
+            margin-left: 5px;
+            margin-left: 5px;
+        }
+
+        .product-div {
+            background-color: #FAF9F6;
+            padding: 10px;
+            border: 0.5px solid black;
+
+        }
+
+        .show-product-heading {
+            height: 15px;
+            margin-bottom: 20px;
+            width: 240px;
+        }
+
+        .show-cart {
+            margin: auto auto;
+            text-align: center;
+        }
+
+        .cart-table {
+            width: 900px;
+        }
+
+        .fa-solid:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <header>
+        <div class="header">
+            <h1>Pay with PayPal</h1>
+        </div>
+    </header> -->
+    <div id="root"></div>
+    <div class='footer'>
+        © 2025 PayPal Integration Demo. All Rights Reserved.
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a74a475490.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a74a475490.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
