@@ -7,11 +7,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const { cartItems, fetchProducts, searchBarText, setSearchBarText } = useCart();
     const location = useLocation()
-    // const [search, setSearch] = useState('')
-
-
-
-    
+    // const [search, setSearch] = useState('')    
 
     return (
         <nav className="navbar navbar-expand-lg   " >
@@ -26,11 +22,14 @@ const Navbar = () => {
                         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
+
                         <Link className="nav-link" to="/product">Product</Link>
+
                     </li>
 
 
                     <li className="nav-item">
+
                         <Link className="nav-link " to="/about">AboutUs</Link>
                     </li>
                     <li className="nav-item">
@@ -40,8 +39,6 @@ const Navbar = () => {
                
 
             </div>
-           
-
         </nav>
     );
 };

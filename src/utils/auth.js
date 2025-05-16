@@ -6,6 +6,7 @@ export const setLocalstorage =(key,value,ttl)=>{
         expiry:now.getTime()+ttl
     }
     localStorage.setItem(key,JSON.stringify(item))
+
 }
 
 export const getTokenWithExpiry = (key) => {
@@ -22,3 +23,4 @@ export const getTokenWithExpiry = (key) => {
 
   return item.value;
 };
+

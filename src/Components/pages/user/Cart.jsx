@@ -30,12 +30,16 @@ const Cart = () => {
     return (
         <>
             {cartItems.length > 0 ?
+
                 <div style={{ backgroundColor: '#eaeef4', minHeight:'100vh' }}>
+
                     <div className='container text-end ' style={{}} ><Link onClick={removeall}>Remove All</Link></div>
                     <div className={` container  text-center `}>
                         {cartItems.map((item, index) => (
                             <div className='p-1 shadow-sm rounded' key={index + 1}>
+
                                 <div className="mt-1 d-flex p-1 pt-2" style={{backgroundColor:'#f5f7fa'}}>
+
 
                                     <div className='p-2 ' >
                                         <img src={`http://localhost:3000${item.images}`} style={{ height: '200px', width: '220px' }} alt="" />
@@ -53,7 +57,9 @@ const Cart = () => {
                                         </div>
                                     </div >
                                     <div className='d-flex pt-2 w-25 mt-3' style={{margin:'auto auto'}} >
+
                                         <button className='btn h-25 mt-5 ms-2 w-75' style={{backgroundColor:'transparent', color:'red'}} onClick={(e) => { removeClick(e, item._id) }}><i className="fa-duotone fa-solid fa-trash" ></i> Remove</button>
+
                                         </div>
 
                                 </div>

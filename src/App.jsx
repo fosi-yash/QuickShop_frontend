@@ -24,6 +24,7 @@ import About from './Components/pages/About';
 
 
 
+
 const AppWrapper = () => {
   const location = useLocation();
 
@@ -31,11 +32,13 @@ const AppWrapper = () => {
     <CartProvider>
       <ShippingProvider>
       {/* Only show Navbar if not on /checkout */}
+
         <div className='sticky-top w-100'>
       <Header/>
         
         </div>
       <Navbar/>
+
    
 
         <ScrollToTop/>
@@ -43,8 +46,11 @@ const AppWrapper = () => {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+
+
         <Route path="/product" element={<ValidUser><Product /></ValidUser>} />
         <Route path="/cart" element={<ValidUser><Cart /></ValidUser>} />
         <Route path="/checkout" element={<ValidUser><Paypal/></ValidUser>} />

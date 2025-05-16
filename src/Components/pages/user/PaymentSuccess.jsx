@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getTokenWithExpiry } from '../../../utils/auth';
 
+
 const PaymentSuccess = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,7 +10,9 @@ const PaymentSuccess = () => {
   const [sdiv, setSdiv] = useState('d-none');
 
   const navigate = useNavigate();
+
   const token = getTokenWithExpiry('token');
+
 
   const fetchOrder = async () => {
     try {
@@ -66,13 +69,13 @@ const PaymentSuccess = () => {
   }
 
   return (
-    <>
-      <div className={`container ${fdiv} d-flex flex-column align-items-center vh-100 mt-5 text-center`}>
+    <div style={{backgroundColor:'#eaeef4'}}>
+      <div className={`container ${fdiv} d-flex flex-column align-items-center vh-100 mt-5 text-center`} >
         <img
           src="/success.gif"
           alt="Payment Successful"
           className="mt-4 img-fluid mb-4"
-          style={{ maxWidth: '300px' }}
+          style={{ maxWidth: '300px' ,  }}
         />
         <h2 className="text-success">Payment Successful!</h2>
         <p className="text-muted">Thank you for your purchase.</p>
@@ -84,7 +87,7 @@ const PaymentSuccess = () => {
         </button>
       </div>
 
-      <div className={`container ${sdiv} mt-3 p-4 border border-success rounded bg-light shadow`}>
+      <div className={`container ${sdiv} mt-3 p-4 border border-success rounded  shadow`} style={{backgroundColor:'rgba(234, 238, 244,0.7)'}}>
         <h2 className="text-success mb-3 text-center">🎉 Order Summary</h2>
         <hr />
 
@@ -131,7 +134,7 @@ const PaymentSuccess = () => {
           <button className="btn btn-primary" onClick={() => navigate('/')}>Go to Home</button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

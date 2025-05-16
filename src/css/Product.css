@@ -1,18 +1,5 @@
-/* .buy-btn{
-    background-color:#FF6F00;  
-    
-    width: 110px;
-} */
-/* .buy-btn:hover{
-    background-color: #e65c00;  
-} */
-/* .cart-btn{
-    background-color: #28A745;
-    width: 110px;
-}
-.cart-btn:hover{
-    background-color:#218838;
-} */
+
+
 .product-main-div{
     background-color: #eaeef4;
 }
@@ -20,7 +7,7 @@
     background-color: #f5f7fa;
 }
 /* Buy Now Button */
-.buy-btn {
+.buy-product-btn {
   background-color: #FF6F00;     /* Bright orange */
   color: #ffffff;
   border: none;
@@ -32,7 +19,7 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.buy-btn:hover {
+.buy-product-btn:hover {
   background-color: #e65c00;     /* Darker orange on hover */
   transform: scale(1.03);
 }
@@ -53,4 +40,13 @@
 .cart-btn:hover {
   background-color: #218838;     /* Darker green on hover */
   transform: scale(1.03);
+}
+
+.show-product img {
+  width: 100%;
+  height: 200px;          /* fixed height for all images */
+  object-fit: contain;    /* keeps aspect ratio, fits inside */
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  background-color: white; /* optional: white bg for transparent images */
 }

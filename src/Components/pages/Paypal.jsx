@@ -9,6 +9,7 @@ import { getTokenWithExpiry } from '../../utils/auth';
 import '../../css/Paypal.css'
 
 
+
 const Paypal = () => {
 
   const [cart, setCart] = useState([])
@@ -131,7 +132,9 @@ const Paypal = () => {
  
 
   return (
+
     <div style={{ backgroundColor: '#eaeef4' , minHeight:'100vh' }}>
+
       <div className={` container p-3  `} >
 
         
@@ -140,7 +143,9 @@ const Paypal = () => {
         <Address onselectedaddress={setSelectedAddress}/>
         </div>
 
+
         <div className="shadow bg-white w-50 text-center mt-2 p-4" style={{ margin: 'auto',  }}>
+
 
           <h5>Price Details : </h5><hr />
           <div className='d-flex justify-content-between' >
@@ -158,7 +163,9 @@ const Paypal = () => {
           </div>
 
           <div className={`d-flex p-2 ${table} bg-white justify-content-center `}>
+
             <button className='place-order-btn w-50 ' onClick={onPay} >Place Order</button>
+
           </div>
 
         </div>
@@ -180,6 +187,7 @@ const Paypal = () => {
         </PayPalScriptProvider>
       </div>
     </div>
+
 
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { getTokenWithExpiry } from '../../../utils/auth'
 
+
 const Addproducts = () => {
     const [data, setData] = useState({
         productName: '',
@@ -18,7 +19,9 @@ const Addproducts = () => {
     const [image, setImage] = useState(null)
     const [categories, setCategories] = useState([])
     const modalref = useRef(null)
+
     const token = getTokenWithExpiry('token')
+
 
     async function fetchcategories() {
 

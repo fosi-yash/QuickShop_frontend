@@ -5,6 +5,7 @@ import { getTokenWithExpiry } from '../../../utils/auth'
 const Orders = () => {
    const [orders,setOrders]=useState([])
    const token =getTokenWithExpiry('token')
+
    const navigate=useNavigate()
 
    useEffect(()=>{
@@ -27,8 +28,10 @@ const Orders = () => {
 
 
 
+
         <div className=" " style={{backgroundColor:'#eaeef4',minHeight:'100vh'}}>
         <div className=" container shadow mt-2 order-list">
+
           <h2 className="mb-4">Your Orders</h2>
           {orders.length === 0 ? (
             <p className="text-muted">No orders found.</p>

@@ -29,6 +29,7 @@ const Login = () => {
       // Save the auth token and redirect
       setLocalstorage('token',json.authtoken,100000000)
       setLocalstorage('role', json.role,100000000);
+
       if (json.role === 'admin') {
         navigate('/dashboard')
       } else {
@@ -64,6 +65,7 @@ const Login = () => {
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
+
               <input
                 type="email"
                 id="email"
@@ -77,6 +79,7 @@ const Login = () => {
             </div>
 
             <div className="mb-3">
+
               <input
                 type="password"
                 id="password"
@@ -84,6 +87,7 @@ const Login = () => {
                 value={credentials.password}
                 onChange={onChange}
                 className="form-control"
+
                 placeholder="Password"
                 required
               />
@@ -98,6 +102,7 @@ const Login = () => {
               <Link to="/signup">Create an account</Link>
             </div>
           </form>
+
 
         </div>
       </div>

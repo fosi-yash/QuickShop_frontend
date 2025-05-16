@@ -2,25 +2,35 @@ import React, { useEffect } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import '../../css/Home.css'
 import { useCart } from './user/CartContext'
+import Slider from './Slider'
 
 const Home = () => {
   const {fetchProducts,category,setSearchBarText}=useCart()
   const navigate=useNavigate()
+  const slidesData = [
+  { image: '/slider_image/headphone_banner.jpg' },
+  { image: '/slider_image/mobile_banner.jpg' },
+  { image: '/slider_image/watch_banner.jpg' },
+
+];
   useEffect(()=>{
     setSearchBarText('')
   },[])
   return (
+
     <div style={{backgroundColor:'#eaeef4'}}>
-       <section className="hero  text-center py-5">
-    <div className="container">
-      <h1 className="display-4">Welcome to QuickShop</h1>
+
+       <section className="hero text-center py-4">
+    
+      <Slider slides={slidesData} />
+      {/* <h1 className="display-4">Welcome to QuickShop</h1>
       <p className="lead">Discover amazing products at great prices!</p>
-      <Link className="btn btn-primary btn-lg" to='/product'>Shop Now</Link>
-    </div>
+      <Link className="btn btn-primary btn-lg" to='/product'>Shop Now</Link> */}
+    
   </section>
 
   
-  <section id="products" className="py-5">
+  <section id="products" className="py-5 ">
     <div className="container">
       <h2 className="text-center mb-4">Featured Products</h2>
       <div className="row">
@@ -69,7 +79,9 @@ const Home = () => {
   </section>
 
   
+
   <section className="updated-section text-white text-center py-5">
+
     <div className="container">
       <h2 className="mb-3">Stay Updated</h2>
       <p>Subscribe to our newsletter and get the latest deals!</p>

@@ -5,7 +5,9 @@ import Navbar from './Navbar';
 import Spinner from './Spinner';
 
 import '../../css/Product.css'
+
 import { getTokenWithExpiry } from '../../utils/auth';
+
 
 const Product = () => {
     const backend = import.meta.env.BACKEND;
@@ -13,11 +15,13 @@ const Product = () => {
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState({ qty: "1" })
     const [cart, setCart] = useState([]);
+
     const token=getTokenWithExpiry('token')
     if(!token){
         navigate('/login')
     }
     // console.log(getTokenWithExpiry('token'))
+
 
     const { cartItems, fetchProducts, items, addtocart } = useCart()
 
@@ -63,6 +67,7 @@ const Product = () => {
     }
     return (
         <div className='product-main-div'>
+
             {loading && <Spinner />}
             <div className="container  text-center my-3">
                 <div className="row">
@@ -70,7 +75,9 @@ const Product = () => {
                         
                             items.map((p) => (
                                 <div key={p._id} className="col-md-3 mb-4">
+
                                     <div className=" show-product p-3 border rounded">
+
                                         <div className='mx-2'>
                                             <img src={`http://localhost:3000${p.images}`} style={{transition:'transform 0.3s ease' }} className='img img-fluid' alt="Mobile Image" />
                                         </div>
@@ -86,7 +93,7 @@ const Product = () => {
                                             ))}
                                         </select><br />
                                         <div className='d-flex justify-content-between mt-2'>
-                                            <button className="btn buy-btn  btn-primary" onClick={(e) => onBuy(e, p)} type="button">Buy Now</button>
+                                            <button className="btn buy-product-btn  btn-primary" onClick={(e) => onBuy(e, p)} type="button">Buy Now</button>
                                             <button className="btn cart-btn btn-secondary" onClick={(e) => onCart(e, p)} type="button">Add to Cart</button>
                                         </div>
                                     </div>

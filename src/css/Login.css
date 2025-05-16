@@ -24,12 +24,12 @@
   transition: all 0.3s ease;
 }
 
-.btn-primary {
+.login-btn-primary {
   background-color: #36506B !important;
   border-color: #36506B !important;
 }
 
-.btn-primary:hover {
+.login-btn-primary:hover {
   background-color: #2b3f56 !important;
   border-color: #2b3f56 !important;
 }
@@ -77,3 +77,4 @@ a {
 a:hover {
   text-decoration: underline;
 }
+

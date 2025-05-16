@@ -8,6 +8,7 @@ import { shippingContext } from './AddressContext';
 import { getTokenWithExpiry } from '../../../utils/auth';
 
 
+
 const Paypal = () => {
 
   const [cart, setCart] = useState([])
@@ -21,6 +22,7 @@ const Paypal = () => {
   const [selectedAddress,setSelectedAddress]=useState("")
   var loader = false
   const authtoken = getTokenWithExpiry('token')
+
   const shippingCharge = shipping
 
 

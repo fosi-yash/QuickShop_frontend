@@ -4,6 +4,7 @@ import html2pdf from 'html2pdf.js';
 import html2canvas from "html2canvas";
 import { getTokenWithExpiry } from "../../../utils/auth";
 
+
 const OrderDetails = () => {
     const [order, setOrder] = useState(null);
     const pdfref = useRef()
@@ -11,6 +12,7 @@ const OrderDetails = () => {
     const id = location.state?.id;
 
     const token = getTokenWithExpiry('token');
+
 
     const fetchOrder = async () => {
         try {
@@ -87,11 +89,11 @@ const OrderDetails = () => {
     }
 
     return (
-        <>
+        <div style={{ backgroundColor: 'rgb(234, 238, 244)' }}>
             <div className="container text-end mt-2">
                 Download Invoices
                 <i className="fa-solid fa-file-arrow-down mx-2  fa-xl" onClick={handlepdfdownload} style={{ color: '#74C0FC' }}></i></div>
-            <div ref={pdfref} className='container mt-3 p-4 border border-success rounded bg-light shadow'>
+            <div ref={pdfref} className='container mt-3 p-4 border border-success rounded shadow' style={{backgroundColor:'#f5f7fa'}}>
                 <h3 className="text-success mb-3 text-center">Order Details</h3>
 
                 <hr />
@@ -100,7 +102,7 @@ const OrderDetails = () => {
                 <p><strong>🆔 Payment ID:</strong> {order.paymentid}</p>
                 <p><strong>📅 Date:</strong> {new Date(order.paymentdate).toLocaleDateString()}</p>
                 {order.refundid ? <p><strong>💳 Refund Status:</strong> <span className="text-success">{order.paymentstatus}</span></p> : <p><strong>💳 Status:</strong> <span className="text-success">{order.paymentstatus}</span></p>}
-                <p><strong>💰 Total Paid:</strong> ${(parseFloat (order.totalprice)).toFixed(2)} {order.refundid && '( Refunded )'}</p>
+                <p><strong>💰 Total Paid:</strong> ${(parseFloat(order.totalprice)).toFixed(2)} {order.refundid && '( Refunded )'}</p>
 
                 {order.address && (
                     <div className="mt-4">
@@ -166,7 +168,7 @@ const OrderDetails = () => {
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
     );
 };
 

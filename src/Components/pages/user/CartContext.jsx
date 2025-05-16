@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
+
 import { getTokenWithExpiry } from "../../../utils/auth";
+
 
 
 const CartContext = createContext();
@@ -10,7 +12,9 @@ var loader = false
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([])
     const [items, setItems] = useState([])
+
     const authtoken = getTokenWithExpiry('token')
+
     const [searchBarText, setSearchBarText] = useState('')
     const [category,setCategory]=useState([])
 
@@ -56,6 +60,7 @@ export const CartProvider = ({ children }) => {
     useEffect(() => {
         const fetchcart = async () => {
             const token = getTokenWithExpiry('token')
+
             if (!token) return; // Exit early if no token is found
 
             try {
