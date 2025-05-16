@@ -1,0 +1,279 @@
+import React, { useEffect, useState } from 'react'
+import { useRef } from 'react'
+import { getTokenWithExpiry } from '../../../utils/auth'
+
+const Addproducts = () => {
+    const [data, setData] = useState({
+        productName: '',
+        description: '',
+        prize: '',
+        stock: '',
+        category: ''
+    })
+    const [categorydata, setCategorydata] = useState({
+        categoryname: '',
+        description:''
+    })
+    const [categoryimage, setCategoryimage] = useState(null)
+    const [image, setImage] = useState(null)
+    const [categories, setCategories] = useState([])
+    const modalref = useRef(null)
+    const token = getTokenWithExpiry('token')
+
+    async function fetchcategories() {
+
+        const response = await fetch('http://localhost:3000/category', {
+            method: 'GET',
+            headers: {
+                "auth-token": token,
+                'Content-Type': 'application/json'
+            }
+        })
+        const data2 = await response.json()
+        setCategories(data2)
+
+    }
+    useEffect(() => {
+        fetchcategories()
+    }, [])
+
+    const handleChange = (e) => {
+        if (e.target.value === 'add-new') {
+
+            modalref.current.click(); // Open modal
+        }
+        else {
+            setData({
+                ...data, [e.target.name]: e.target.value
+            })
+        }
+    }
+    const handleImage = (e) => {
+        setImage(e.target.files[0])
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        if (!image) {
+            alert('select an image')
+        }
+        if(data.category==='' || !data.category){
+           return alert('pls select the product category')
+        }
+        const formData = new FormData()
+        formData.append("productName", data.productName)
+        formData.append("description", data.description)
+        formData.append("prize", data.prize)
+        formData.append("stock", data.stock)
+        formData.append("category", data.category)
+        formData.append("image", image)
+
+        const response = await fetch('http://localhost:3000/addproduct', {
+            method: "POST",
+            headers: {
+
+                "auth-token": token
+            },
+            body: formData
+        })
+        const data2 = await response.json()
+        console.log(data2)
+        setData({
+            productName: '',
+            description: '',
+            prize: '',
+            stock: '',
+            category: ''
+        })
+        setImage(null)
+    }
+    const categoryChange = (e) => {
+        setCategorydata({
+            ...categorydata, [e.target.name]: e.target.value
+        })
+    }
+    const handlecategoryImage = (e) => {
+        setCategoryimage(e.target.files[0])
+    }
+    const categorySubmit = async(e) => {
+        e.preventDefault()
+        
+        const formData=new FormData()
+        formData.append('categoryname',categorydata.categoryname)
+        formData.append('description',categorydata.description)
+        formData.append('images',categoryimage)
+
+        const response=await fetch('http://localhost:3000/addcategory',{
+            method:'POST',
+            headers:{
+                'auth-token':token,
+        
+            },
+            body:formData
+        })
+        const categoryresponse=await response.json()
+        console.log(category)
+        modalref.current.click();
+        fetchcategories()
+    }
+
+
+    return (
+        <div className="container mt-5">
+
+            <button type="button" ref={modalref} className="btn d-none btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+            </button>
+
+
+            <div className="modal fade" style={{ height: '505px' }} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <form onSubmit={categorySubmit}>
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Add New Category</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="p-4 border rounded shadow bg-white">
+                                    <div className="mb-3">
+
+                                        <input
+                                            type="text"
+                                            name="categoryname"
+                                            className="form-control"
+                                            value={categorydata.categoryname}
+                                            onChange={categoryChange}
+                                            placeholder='Enter Category Name'
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+
+                                        <textarea
+                                            name="description"
+                                            className="form-control"
+                                            value={categorydata.description}
+                                            onChange={categoryChange}
+                                            placeholder='Description'
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+
+                                        <input
+                                            type="file"
+                                            name="image"
+                                            className="form-control"
+                                            accept="image/*"
+                                            placeholder='Select Image'
+                                            onChange={handlecategoryImage}
+                                        />
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div className="modal-footer text-center d-flex">
+                                <div className='w-100 h-100'>
+                                    <button type="submit" className="btn btn-primary">ADD CATEGORY</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="p-4 border rounded shadow bg-white">
+                <h2 className="mb-4">Add Product</h2>
+
+                <div className="mb-3">
+                    <label className="form-label">Product Category</label>
+                    <select
+                        name="category"
+                        value={data.category}
+                        onChange={handleChange}
+                        className="form-control"
+                        id="category"
+                    >
+                        <option value="" disabled>Select Category</option>
+                        {categories.map((cat) => (
+                            <option key={cat._id} value={cat._id}>
+                                {cat.categoryname}
+                            </option>
+                        ))}
+                        <option value="add-new"> ➕ Add New Category</option>
+                    </select>
+
+
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Product Name</label>
+                    <input
+                        type="text"
+                        name="productName"
+                        className="form-control"
+                        value={data.productName}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label">Description</label>
+                    <textarea
+                        name="description"
+                        className="form-control"
+                        value={data.description}
+                        onChange={handleChange}
+                        required
+                    ></textarea>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label">Price</label>
+                    <input
+                        type="number"
+                        name="prize"
+                        className="form-control"
+                        value={data.prize}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label">Image</label>
+                    <input
+                        type="file"
+                        name="image"
+                        className="form-control"
+                        accept="image/*"
+                        onChange={handleImage}
+                    />
+                </div>
+
+
+
+                <div className="mb-3">
+                    <label className="form-label">Stock Quantity</label>
+                    <input
+                        type="number"
+                        name="stock"
+                        className="form-control"
+                        value={data.stock}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                <button type="submit" className="btn btn-primary">
+                    Add Product
+                </button>
+            </form>
+        </div>
+    )
+}
+
+export default Addproducts

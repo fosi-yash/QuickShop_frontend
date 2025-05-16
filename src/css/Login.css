@@ -1,0 +1,79 @@
+/* General page background */
+.login {
+  background-color: #eaeef4;
+  min-height: 100vh;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+/* Centered form box */
+.login .container {
+  max-width: 450px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Role toggle buttons */
+.user_btn {
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 8px 24px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #36506B !important;
+  border-color: #36506B !important;
+}
+
+.btn-primary:hover {
+  background-color: #2b3f56 !important;
+  border-color: #2b3f56 !important;
+}
+
+.btn-outline-secondary {
+  color: #36506B;
+  border: 1px solid #36506B;
+  background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #36506B;
+  color: white;
+}
+
+/* Input fields */
+input.form-control {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  font-size: 15px;
+}
+
+/* Login button */
+.login-btn {
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #36506B;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #2b3f56;
+  color: white;
+}
+
+/* Links */
+a {
+  color: #36506B;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

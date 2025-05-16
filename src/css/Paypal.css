@@ -1,0 +1,12 @@
+.place-order-btn {
+  background-color: #FF6F00;
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+.place-order-btn:hover {
+  background-color: #e65c00;
+}
