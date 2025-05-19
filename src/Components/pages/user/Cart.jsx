@@ -2,12 +2,18 @@ import React, { useEffect, useState } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from './CartContext'
+import { getTokenWithExpiry } from '../../../utils/auth'
 
 
 const Cart = () => {
     const { cartItems, emptyCart, removeCart } = useCart()
     const [products, setProducts] = useState([])
     const navigate = useNavigate()
+    const token = getTokenWithExpiry('token');
+    const role = getTokenWithExpiry('role')
+    if (role !== 'user' || !token) {
+        return navigate('/login')
+    }
 
 
     const totalAmount = cartItems.reduce((total, item) => {
@@ -31,14 +37,14 @@ const Cart = () => {
         <>
             {cartItems.length > 0 ?
 
-                <div style={{ backgroundColor: '#eaeef4', minHeight:'100vh' }}>
+                <div style={{ backgroundColor: '#eaeef4', minHeight: '100vh' }}>
 
                     <div className='container text-end ' style={{}} ><Link onClick={removeall}>Remove All</Link></div>
                     <div className={` container  text-center `}>
                         {cartItems.map((item, index) => (
                             <div className='p-1 shadow-sm rounded' key={index + 1}>
 
-                                <div className="mt-1 d-flex p-1 pt-2" style={{backgroundColor:'#f5f7fa'}}>
+                                <div className="mt-1 d-flex p-1 pt-2" style={{ backgroundColor: '#f5f7fa' }}>
 
 
                                     <div className='p-2 ' >
@@ -56,11 +62,11 @@ const Cart = () => {
                                             <h5 className='me-5 mt-3'>Qty : {item.quantity}</h5>
                                         </div>
                                     </div >
-                                    <div className='d-flex pt-2 w-25 mt-3' style={{margin:'auto auto'}} >
+                                    <div className='d-flex pt-2 w-25 mt-3' style={{ margin: 'auto auto' }} >
 
-                                        <button className='btn h-25 mt-5 ms-2 w-75' style={{backgroundColor:'transparent', color:'red'}} onClick={(e) => { removeClick(e, item._id) }}><i className="fa-duotone fa-solid fa-trash" ></i> Remove</button>
+                                        <button className='btn h-25 mt-5 ms-2 w-75' style={{ backgroundColor: 'transparent', color: 'red' }} onClick={(e) => { removeClick(e, item._id) }}><i className="fa-duotone fa-solid fa-trash" ></i> Remove</button>
 
-                                        </div>
+                                    </div>
 
                                 </div>
 
@@ -68,10 +74,12 @@ const Cart = () => {
                             </div>
                         ))}
                     </div>
-                
-                    <div className="container sticky-button-container pb-2 p-3 d-flex justify-content-end mt-1  rounded" style={{position : 'sticky',
-    bottom : '2px',  zIndex : '999',backgroundColor: '#f1f1f1'}}>
-                        <button className="btn  me-5" style={{ width: "20%",backgroundColor:'orange' }} onClick={checkout}>
+
+                    <div className="container sticky-button-container pb-2 p-3 d-flex justify-content-end mt-1  rounded" style={{
+                        position: 'sticky',
+                        bottom: '2px', zIndex: '999', backgroundColor: '#f1f1f1'
+                    }}>
+                        <button className="btn  me-5" style={{ width: "20%", backgroundColor: 'orange' }} onClick={checkout}>
                             Next
                         </button>
                     </div>

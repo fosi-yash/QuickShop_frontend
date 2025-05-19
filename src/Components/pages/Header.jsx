@@ -4,11 +4,14 @@ import Navbar from './Navbar'
 import '../../css/Header.css'
 import { useLocation, useNavigate } from 'react-router'
 import { useCart } from './user/CartContext'
+import { getTokenWithExpiry } from '../../utils/auth'
 
 const Header = () => {
     const { cartItems, fetchProducts, searchBarText, setSearchBarText } = useCart();
     const location = useLocation()
     const navigate = useNavigate()
+    const role = getTokenWithExpiry('role');
+
 
     useEffect(() => {
         fetchProducts(searchBarText)
@@ -33,7 +36,7 @@ const Header = () => {
                     <img src={logo} className='logo-image' alt="LOGO" />
                 </div>
                 <div className="w-50 searchbar ">
-                    {(location.pathname === '/success' || location.pathname === '/checkout' || location.pathname === '/cancel') ? "" : (
+                    {(location.pathname === '/success' || role === 'admin' || location.pathname === '/checkout' || location.pathname === '/cancel') ? "" : (
                         // <div className="position-relative" style={{ width: '500px' }}>
                         <input
                             className="center-placeholder"
@@ -46,24 +49,27 @@ const Header = () => {
                         // </div>
                     )}</div>
                 <div className="w-25 header-right"> <div className="ms-auto position-relative me-4 ">
-                    <i className="fa-solid fa-cart-shopping fa-xl " onClick={goCart} style={{ cursor: 'pointer', color: '#36506b' }}></i>
-                    {location.pathname === '/product' && cartItems.length > 0 && (
-                        <span className="cart-badge">
-                            {cartItems.length}
-                        </span>
+                    {role !== 'admin' && (
+                        <>
+                            <i className="fa-solid fa-cart-shopping fa-xl " onClick={goCart} style={{ cursor: 'pointer', color: '#36506b' }}></i>
+                            {location.pathname === '/product' && cartItems.length > 0 && (
+                                <span className="cart-badge">{cartItems.length}</span>
+                            )}
+                        </>
                     )}
+
                 </div>
                     <div className="button-container me-3">
                         <i className="fa-solid fa-user fa-xl" style={{ color: '#36506b' }}></i>
 
                         <ul className={` hover-list`}>
                             <li>Your Profile</li>
-                            <li onClick={() => { navigate('/orders') }}> Your Orders</li>
+
+                            {role === 'user' && <li onClick={() => { navigate('/orders') }}> Your Orders</li>}
                             <li onClick={() => { localStorage.removeItem('token'); navigate('/login') }}>Logout</li>
                         </ul>
                     </div>
                 </div>
-
             </div>
         </>
     )

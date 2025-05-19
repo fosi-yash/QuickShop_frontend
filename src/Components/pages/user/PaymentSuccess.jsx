@@ -12,6 +12,13 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
 
   const token = getTokenWithExpiry('token');
+  const role = getTokenWithExpiry('role')
+  useEffect(()=>{
+
+    if (role !== 'user' || !token) {
+      return navigate('/login')
+    }
+  })
 
 
   const fetchOrder = async () => {
@@ -69,13 +76,13 @@ const PaymentSuccess = () => {
   }
 
   return (
-    <div style={{backgroundColor:'#eaeef4'}}>
+    <div style={{ backgroundColor: '#eaeef4' }}>
       <div className={`container ${fdiv} d-flex flex-column align-items-center vh-100 mt-5 text-center`} >
         <img
           src="/success.gif"
           alt="Payment Successful"
           className="mt-4 img-fluid mb-4"
-          style={{ maxWidth: '300px' ,  }}
+          style={{ maxWidth: '300px', }}
         />
         <h2 className="text-success">Payment Successful!</h2>
         <p className="text-muted">Thank you for your purchase.</p>
@@ -87,7 +94,7 @@ const PaymentSuccess = () => {
         </button>
       </div>
 
-      <div className={`container ${sdiv} mt-3 p-4 border border-success rounded  shadow`} style={{backgroundColor:'rgba(234, 238, 244,0.7)'}}>
+      <div className={`container ${sdiv} mt-3 p-4 border border-success rounded  shadow`} style={{ backgroundColor: 'rgba(234, 238, 244,0.7)' }}>
         <h2 className="text-success mb-3 text-center">🎉 Order Summary</h2>
         <hr />
 

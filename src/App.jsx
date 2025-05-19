@@ -21,6 +21,7 @@ import Dashboard from './Components/pages/Admin/Dashboard';
 import Header from './Components/pages/Header';
 import Contact from './Components/pages/Contact';
 import About from './Components/pages/About';
+import { AdminProvider } from './Components/pages/Admin/AdminContext';
 
 
 
@@ -29,28 +30,22 @@ const AppWrapper = () => {
   const location = useLocation();
 
   return (
+    <AdminProvider>
     <CartProvider>
       <ShippingProvider>
       {/* Only show Navbar if not on /checkout */}
 
         <div className='sticky-top w-100'>
       <Header/>
-        
         </div>
       <Navbar/>
-
-   
-
         <ScrollToTop/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
-
-
         <Route path="/product" element={<ValidUser><Product /></ValidUser>} />
         <Route path="/cart" element={<ValidUser><Cart /></ValidUser>} />
         <Route path="/checkout" element={<ValidUser><Paypal/></ValidUser>} />
@@ -65,6 +60,7 @@ const AppWrapper = () => {
       </Routes>
       </ShippingProvider>
     </CartProvider>
+    </AdminProvider>
   );
 };
 

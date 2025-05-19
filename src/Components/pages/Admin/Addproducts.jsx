@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { getTokenWithExpiry } from '../../../utils/auth'
+import { useNavigate } from 'react-router'
 
 
 const Addproducts = () => {
@@ -19,8 +20,13 @@ const Addproducts = () => {
     const [image, setImage] = useState(null)
     const [categories, setCategories] = useState([])
     const modalref = useRef(null)
+    const navigate=useNavigate()
 
-    const token = getTokenWithExpiry('token')
+    const token = getTokenWithExpiry('token');
+         const role=getTokenWithExpiry('role')
+            if(role!=='admin'  || !token){
+               return navigate('/login')
+            }
 
 
     async function fetchcategories() {
@@ -37,6 +43,9 @@ const Addproducts = () => {
 
     }
     useEffect(() => {
+        if(role!=='admin'  || !token){
+               return navigate('/login')
+            }
         fetchcategories()
     }, [])
 

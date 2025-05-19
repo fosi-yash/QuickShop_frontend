@@ -13,15 +13,20 @@ const Paypal = () => {
 
   const [cart, setCart] = useState([])
   const { cartItems, emptyCart } = useCart()
-  const {shipping}=shippingContext()
+  const { shipping } = shippingContext()
   const navigate = useNavigate();
   const location = useLocation();
   const Cart = location.state.cart;
   const [paypal, setPaypal] = useState('d-none')
   const [table, setTable] = useState('')
-  const [selectedAddress,setSelectedAddress]=useState("")
+  const [selectedAddress, setSelectedAddress] = useState("")
   var loader = false
   const authtoken = getTokenWithExpiry('token')
+
+  const role = getTokenWithExpiry('role')
+  if (role !== 'user' || !token) {
+    return navigate('/login')
+  }
 
   const shippingCharge = shipping
 
@@ -32,7 +37,7 @@ const Paypal = () => {
     loader = false
   }, [Cart])
 
-  
+
   const totalAmount = cart.reduce((total, item) => {
     return total + (item.prize * item.quantity);
   }, 0)
@@ -75,7 +80,7 @@ const Paypal = () => {
   const onApprove = (data, actions) => {
     return actions.order.capture().then(details => {
       console.log("Payment successful:", details);
-      console.log("Payment successful:",details.purchase_units[0].payments.captures[0].id
+      console.log("Payment successful:", details.purchase_units[0].payments.captures[0].id
 
       );
 
@@ -98,10 +103,10 @@ const Paypal = () => {
             })),
             totalprice: totalAmount,
             paymentid: details.id,
-            captureid:details.purchase_units[0].payments.captures[0].id,
+            captureid: details.purchase_units[0].payments.captures[0].id,
             paymentstatus: details.status,
             paymentdate: details.create_time.substring(0, 10),
-            address: selectedAddress 
+            address: selectedAddress
           })
         });
         const json = await response.json();
@@ -118,7 +123,7 @@ const Paypal = () => {
   };
 
   const onPay = () => {
-    if(selectedAddress===""){
+    if (selectedAddress === "") {
       alert('please select address')
       return
     }
@@ -129,19 +134,19 @@ const Paypal = () => {
       console.log(detailMargin)
     }
   }
- 
+
 
   return (
-    <div style={{ backgroundColor: '#f1f1f1', height:'100vh' }}>
+    <div style={{ backgroundColor: '#f1f1f1', height: '100vh' }}>
       <div className={` container p-3  `} >
 
-        
-        <div className={`container  ${selectedAddress!=="" && table}   text-center `} >
 
-        <Address onselectedaddress={setSelectedAddress}/>
+        <div className={`container  ${selectedAddress !== "" && table}   text-center `} >
+
+          <Address onselectedaddress={setSelectedAddress} />
         </div>
 
-        <div className={`shadow sticky-top   bg-white w-50  text-center mt-2 p-4`} style={{ margin:'auto auto', zIndex:'100'}}>
+        <div className={`shadow sticky-top   bg-white w-50  text-center mt-2 p-4`} style={{ margin: 'auto auto', zIndex: '100' }}>
 
           <h5>Price Details : </h5><hr />
           <div className='d-flex justify-content-between' >

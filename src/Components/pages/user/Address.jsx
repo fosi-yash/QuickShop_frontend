@@ -8,6 +8,10 @@ import { getTokenWithExpiry } from '../../../utils/auth'
 
 const Address = ({ onselectedaddress }) => {
   const token = getTokenWithExpiry('token')
+  const role = getTokenWithExpiry('role')
+  if (role !== 'user' || !token) {
+    return navigate('/login')
+  }
 
   const { userLocation, useraddress, getDistanceFromLatLonInKm } = shippingContext()
   const [address, setAddress] = useState([]);
@@ -94,18 +98,19 @@ const Address = ({ onselectedaddress }) => {
     })
   }
 
-  const removeAddress = async (e,id) => {
+  const removeAddress = async (e, id) => {
     e.preventDefault();
     const response = await fetch(`http://localhost:3000/address/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         'auth-token': token
-      }})
-      const user_address=await response.json()
-      if(user_address){
-        fetchaddress()
       }
+    })
+    const user_address = await response.json()
+    if (user_address) {
+      fetchaddress()
+    }
   }
 
 
@@ -141,7 +146,7 @@ const Address = ({ onselectedaddress }) => {
 
               </div>
               <div className='w-25 text-end'>
-                <i className="fa-duotone fa-solid fa-lg fa-trash me-4" onClick={(e)=>{removeAddress(e,user._id)}} style={{ marginTop: '30px' }} ></i>
+                <i className="fa-duotone fa-solid fa-lg fa-trash me-4" onClick={(e) => { removeAddress(e, user._id) }} style={{ marginTop: '30px' }} ></i>
 
               </div>
             </div>

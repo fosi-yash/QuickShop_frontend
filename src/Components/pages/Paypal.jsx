@@ -24,10 +24,14 @@ const Paypal = () => {
   var loader = false
   const authtoken = getTokenWithExpiry('token')
   const shippingCharge = shipping
-
-
-  useEffect(() => {
-    loader = true
+   const role=getTokenWithExpiry('role')
+   
+   
+   useEffect(() => {
+     if (role !== 'user' || !token) {
+    return navigate('/login')
+  }
+     loader = true
     setCart(Cart)
     loader = false
   }, [Cart])

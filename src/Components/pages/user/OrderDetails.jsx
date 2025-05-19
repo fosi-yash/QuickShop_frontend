@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 import html2canvas from "html2canvas";
 import { getTokenWithExpiry } from "../../../utils/auth";
@@ -9,11 +9,15 @@ const OrderDetails = () => {
     const [order, setOrder] = useState(null);
     const pdfref = useRef()
     const location = useLocation();
+    const navigate=useNavigate
     const id = location.state?.id;
-
+    
     const token = getTokenWithExpiry('token');
-
-
+    const role = getTokenWithExpiry('role')
+    
+    if (role !== 'user' || !token) {
+        return navigate('/login')
+    }
     const fetchOrder = async () => {
         try {
             const response = await fetch(`http://localhost:3000/orderdetails/${id}`, {
@@ -23,21 +27,19 @@ const OrderDetails = () => {
                     'auth-token': token
                 }
             });
-
+            
             if (!response.ok) {
                 throw new Error('Failed to fetch order details');
             }
-
             const data = await response.json();
             setOrder(data);
         } catch (error) {
             console.error("Fetch error:", error);
         }
     };
-
-
+    
     useEffect(() => {
-
+        
         fetchOrder();
     }, [id, token]);
 
@@ -93,7 +95,7 @@ const OrderDetails = () => {
             <div className="container text-end mt-2">
                 Download Invoices
                 <i className="fa-solid fa-file-arrow-down mx-2  fa-xl" onClick={handlepdfdownload} style={{ color: '#74C0FC' }}></i></div>
-            <div ref={pdfref} className='container mt-3 p-4 border border-success rounded shadow' style={{backgroundColor:'#f5f7fa'}}>
+            <div ref={pdfref} className='container mt-3 p-4 border border-success rounded shadow' style={{ backgroundColor: '#f5f7fa' }}>
                 <h3 className="text-success mb-3 text-center">Order Details</h3>
 
                 <hr />

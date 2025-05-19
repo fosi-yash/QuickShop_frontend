@@ -46,7 +46,8 @@ const Slider = ({ slides }) => {
       
       {slides.map((slide, index) => (
         <div
-          className={index === current ? 'slide active' : 'slide'}
+          className={index === current ? 'slide active '  : 'slide'}
+          
           key={index}
         >
           {index === current && (

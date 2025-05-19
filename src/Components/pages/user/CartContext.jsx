@@ -18,6 +18,8 @@ export const CartProvider = ({ children }) => {
     const [searchBarText, setSearchBarText] = useState('')
     const [category,setCategory]=useState([])
 
+    // ============================= fetching all products ========================>
+
     async function fetchProducts(search) {
 
         const searchProduct = search || ""
@@ -39,6 +41,7 @@ export const CartProvider = ({ children }) => {
 
     }
 
+    // ============================= Add Product To Cart  ========================>
 
     const addtocart = async (product) => {
         loader = true
@@ -57,7 +60,58 @@ export const CartProvider = ({ children }) => {
         loader = false
     }
 
+
+// ============================= Remove Products from Cart========================>
+
+    const removeCart = async (id) => {
+        loader = true
+        const response = await fetch(`http://localhost:3000/removecart/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": `${authtoken}`
+            },
+
+        })
+        setCartItems((previousCart) => previousCart.filter((item) => item._id !== id))
+        loader = false
+    }
+
+    // ============================= Remove All Products From The Cart ========================>
+
+    const emptyCart = async () => {
+        loader = true
+        const response = await fetch('http://localhost:3000/removeall', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": `${authtoken}`
+            }
+        })
+        setCartItems([])
+        loader = false
+    }
+
+ // ======================= Fetching All Category Function==============================>
+
+    const fetchCategory=async()=>{
+        const categories=await fetch('http://localhost:3000/category',{
+            method:'GET',
+            headers:{
+                'auth-token':authtoken,
+                'Content-Type':'application/json'
+            }
+        }) 
+        const response=await categories.json()
+        setCategory(response)
+    }
+        // ============================= UseEffect ========================>
+
+
     useEffect(() => {
+
+            // ============================= fetching Cart ========================>
+
         const fetchcart = async () => {
             const token = getTokenWithExpiry('token')
 
@@ -85,50 +139,10 @@ export const CartProvider = ({ children }) => {
         };
 
         fetchcart();
+// ============================= Calling fechCategory Function ========================>
+
         fetchCategory()
     }, []);
-
-
-    const removeCart = async (id) => {
-        loader = true
-        const response = await fetch(`http://localhost:3000/removecart/${id}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": `${authtoken}`
-            },
-
-        })
-        setCartItems((previousCart) => previousCart.filter((item) => item._id !== id))
-        loader = false
-    }
-
-    const emptyCart = async () => {
-        loader = true
-        const response = await fetch('http://localhost:3000/removeall', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                "auth-token": `${authtoken}`
-            }
-        })
-        setCartItems([])
-        loader = false
-    }
-
- // ======================= Fetching All Category ==============================>
-
-    const fetchCategory=async()=>{
-        const categories=await fetch('http://localhost:3000/category',{
-            method:'GET',
-            headers:{
-                'auth-token':authtoken,
-                'Content-Type':'application/json'
-            }
-        }) 
-        const response=await categories.json()
-        setCategory(response)
-    }
 
 
 
