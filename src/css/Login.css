@@ -46,7 +46,7 @@
 }
 
 /* Input fields */
-input.form-control {
+input.login-control {
   border-radius: 8px;
   border: 1px solid #ced4da;
   padding: 10px;

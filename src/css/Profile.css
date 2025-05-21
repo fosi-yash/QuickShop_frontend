@@ -1,0 +1,17 @@
+.profile-main-div{
+    background-color: #eaeef4;
+}
+.profile-inner-div{
+    background-color: #f5f7fa;
+}
+.profile-edit-icon{
+        position: relative;
+    top: 80px;
+    right: 22px;
+    height: 10px;
+
+}
+.profile-edit-icon:hover{
+        color: rgb(71, 129, 184);
+
+}

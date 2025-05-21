@@ -12,12 +12,12 @@ const Addproducts = () => {
         stock: '',
         category: ''
     })
+    const [image, setImage] = useState(null)
     const [categorydata, setCategorydata] = useState({
         categoryname: '',
         description:''
     })
     const [categoryimage, setCategoryimage] = useState(null)
-    const [image, setImage] = useState(null)
     const [categories, setCategories] = useState([])
     const modalref = useRef(null)
     const navigate=useNavigate()
@@ -38,8 +38,8 @@ const Addproducts = () => {
                 'Content-Type': 'application/json'
             }
         })
-        const data2 = await response.json()
-        setCategories(data2)
+        const data = await response.json()
+        setCategories(data)
 
     }
     useEffect(() => {

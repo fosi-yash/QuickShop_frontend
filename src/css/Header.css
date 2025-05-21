@@ -7,14 +7,14 @@
     width: 100%;
     background-color: #a7bdd2;
 }
- input{ 
+ input.searchbar{ 
   border-radius:40px !important ;
   border: 1px solid rgb(49, 49, 49) ;
   opacity: 65%;
   margin: auto auto;
   width: 70%;
  }
- input:hover{
+ input.searchbar:hover{
   opacity: 90%;
  }
  .searchbar{
@@ -61,4 +61,9 @@
  .center-placeholder{
   text-align: start;
   padding-left: 15px;
+ }
+
+ .profile-image{
+  height: 32px;
+  margin: auto !important;
  }

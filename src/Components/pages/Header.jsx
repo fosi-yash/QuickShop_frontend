@@ -7,7 +7,7 @@ import { useCart } from './user/CartContext'
 import { getTokenWithExpiry } from '../../utils/auth'
 
 const Header = () => {
-    const { cartItems, fetchProducts, searchBarText, setSearchBarText } = useCart();
+    const { cartItems, fetchProducts, searchBarText, setSearchBarText, userData } = useCart();
     const location = useLocation()
     const navigate = useNavigate()
     const role = getTokenWithExpiry('role');
@@ -39,7 +39,7 @@ const Header = () => {
                     {(location.pathname === '/success' || role === 'admin' || location.pathname === '/checkout' || location.pathname === '/cancel') ? "" : (
                         // <div className="position-relative" style={{ width: '500px' }}>
                         <input
-                            className="center-placeholder"
+                            className="center-placeholder searchbar"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
@@ -48,10 +48,10 @@ const Header = () => {
                         />
                         // </div>
                     )}</div>
-                <div className="w-25 header-right"> <div className="ms-auto position-relative me-4 ">
+                <div className="w-25 header-right"> <div className="ms-auto position-relative me-3 ">
                     {role !== 'admin' && (
                         <>
-                            <i className="fa-solid fa-cart-shopping fa-xl " onClick={goCart} style={{ cursor: 'pointer', color: '#36506b' }}></i>
+                            <i className={`fa-solid fa-cart-shopping fa-xl ${userData.profilephoto && "mt-3"} `} onClick={goCart} style={{ cursor: 'pointer', color: '#36506b' }}></i>
                             {location.pathname === '/product' && cartItems.length > 0 && (
                                 <span className="cart-badge">{cartItems.length}</span>
                             )}
@@ -60,10 +60,14 @@ const Header = () => {
 
                 </div>
                     <div className="button-container me-3">
+                        {userData.profilephoto ?
+                        <img src={`http://localhost:3000${userData.profilephoto}`} className='profile-image' alt="Profile" />:
+
                         <i className="fa-solid fa-user fa-xl" style={{ color: '#36506b' }}></i>
+                        }
 
                         <ul className={` hover-list`}>
-                            <li>Your Profile</li>
+                            <li onClick={() => { navigate('/profile') }}>Your Profile</li>
 
                             {role === 'user' && <li onClick={() => { navigate('/orders') }}> Your Orders</li>}
                             <li onClick={() => { localStorage.removeItem('token'); navigate('/login') }}>Logout</li>

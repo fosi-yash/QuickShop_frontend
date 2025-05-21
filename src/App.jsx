@@ -22,6 +22,7 @@ import Header from './Components/pages/Header';
 import Contact from './Components/pages/Contact';
 import About from './Components/pages/About';
 import { AdminProvider } from './Components/pages/Admin/AdminContext';
+import Profile from './Components/pages/user/Profile';
 
 
 
@@ -43,6 +44,7 @@ const AppWrapper = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />

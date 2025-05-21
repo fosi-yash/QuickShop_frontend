@@ -12,11 +12,18 @@ var loader = false
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([])
     const [items, setItems] = useState([])
+     const [userData, setUserData] = useState({
+            name: "",
+            email: "",
+            birthdate: "",
+            mobilenumber: "",
+            profilephoto: ""
+        });
 
     const authtoken = getTokenWithExpiry('token')
 
     const [searchBarText, setSearchBarText] = useState('')
-    const [category,setCategory]=useState([])
+    const [category, setCategory] = useState([])
 
     // ============================= fetching all products ========================>
 
@@ -61,7 +68,7 @@ export const CartProvider = ({ children }) => {
     }
 
 
-// ============================= Remove Products from Cart========================>
+    // ============================= Remove Products from Cart========================>
 
     const removeCart = async (id) => {
         loader = true
@@ -92,25 +99,52 @@ export const CartProvider = ({ children }) => {
         loader = false
     }
 
- // ======================= Fetching All Category Function==============================>
+    // ======================= Fetching All Category Function==============================>
 
-    const fetchCategory=async()=>{
-        const categories=await fetch('http://localhost:3000/category',{
-            method:'GET',
-            headers:{
-                'auth-token':authtoken,
-                'Content-Type':'application/json'
+    const fetchCategory = async () => {
+        const categories = await fetch('http://localhost:3000/category', {
+            method: 'GET',
+            headers: {
+                'auth-token': authtoken,
+                'Content-Type': 'application/json'
             }
-        }) 
-        const response=await categories.json()
+        })
+        const response = await categories.json()
         setCategory(response)
     }
-        // ============================= UseEffect ========================>
+
+    // ============================ Update User ==========================>
+
+    const userUpdate = async () => {
+
+    }
+    // ============================ get User ==========================>
+
+     const fetchuser = async () => {
+         const response = await fetch('http://localhost:3000/getuser', {
+             method: 'GET',
+             headers: {
+                 'Content-Type': 'application/json',
+                 'auth-token': authtoken
+             }
+         })
+         const data = await response.json()
+         setUserData({
+             name: data.name,
+             email: data.email,
+             birthdate: data.birthdate,
+             mobilenumber: data.mobilenumber,
+             profilephoto:data.profilephoto
+         })
+     }
+    
+    
+    // ============================= UseEffect ========================>
 
 
     useEffect(() => {
 
-            // ============================= fetching Cart ========================>
+        // ============================= fetching Cart ========================>
 
         const fetchcart = async () => {
             const token = getTokenWithExpiry('token')
@@ -139,16 +173,41 @@ export const CartProvider = ({ children }) => {
         };
 
         fetchcart();
-// ============================= Calling fechCategory Function ========================>
 
-        fetchCategory()
-    }, []);
+       
+        
+    const fetchuser = async () => {
+        const response = await fetch('http://localhost:3000/getuser', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authtoken
+            }
+        });
+        const data = await response.json();
+        setUserData({
+            name: data.name,
+            email: data.email,
+            birthdate: data.birthdate || "",
+            mobilenumber: data.mobilenumber || "",
+            profilephoto: data.profilephoto
+        });
+    };
+
+    if (authtoken) fetchuser(); // only call if token exists
+    // ============================= Calling fechCategory Function ========================>
+    
+    fetchCategory()
+}, []);
+
+   
+   
 
 
 
 
     return (
-        <CartContext.Provider value={{ items, category, cartItems, setSearchBarText, searchBarText, fetchProducts, emptyCart, addtocart, removeCart }}>
+        <CartContext.Provider value={{ items, category, cartItems, setSearchBarText, searchBarText, fetchProducts, emptyCart, addtocart, removeCart,userData,setUserData,fetchuser }}>
             {children}
         </CartContext.Provider>
     )

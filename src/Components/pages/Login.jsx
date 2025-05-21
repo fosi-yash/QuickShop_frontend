@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import '../../css/Login.css'
 import { setLocalstorage } from '../../utils/auth'
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "", role: "user" })
   let navigate = useNavigate()
+
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
@@ -72,7 +73,7 @@ const Login = () => {
                 name="email"
                 value={credentials.email}
                 onChange={onChange}
-                className="form-control"
+                className="form-control login-control"
                 placeholder="E-mail"
                 required
               />
@@ -86,11 +87,12 @@ const Login = () => {
                 name="password"
                 value={credentials.password}
                 onChange={onChange}
-                className="form-control"
+                className="form-control login-control"
 
                 placeholder="Password"
                 required
               />
+              <Link to='/' className='mx-2 mt-2'>Forget Password ?</Link>
             </div>
 
             <button type="submit" className="btn btn-success w-100 mb-2">
