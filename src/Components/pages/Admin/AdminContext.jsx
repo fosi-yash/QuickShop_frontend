@@ -20,7 +20,7 @@ export const AdminProvider = ({ children }) => {
         prize: "",
         stock: "",
         category: "",
-        images: ""
+        images: []
     })
 
 

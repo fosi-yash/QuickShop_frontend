@@ -7,14 +7,15 @@ import { useCart } from './user/CartContext'
 import { getTokenWithExpiry } from '../../utils/auth'
 
 const Header = () => {
-    const { cartItems, fetchProducts, searchBarText, setSearchBarText, userData } = useCart();
+    const { cartItems, fetchProducts, searchBarText, setSearchBarText, userData, fetchuser } = useCart();
     const location = useLocation()
     const navigate = useNavigate()
     const role = getTokenWithExpiry('role');
-
+    const token = getTokenWithExpiry('token')
 
     useEffect(() => {
         fetchProducts(searchBarText)
+
     }, [searchBarText])
     const searchChange = (e) => {
         navigate('/product');
@@ -48,30 +49,37 @@ const Header = () => {
                         />
                         // </div>
                     )}</div>
-                <div className="w-25 header-right"> <div className="ms-auto position-relative me-3 ">
-                    {role !== 'admin' && (
-                        <>
-                            <i className={`fa-solid fa-cart-shopping fa-xl ${userData.profilephoto && "mt-3"} `} onClick={goCart} style={{ cursor: 'pointer', color: '#36506b' }}></i>
-                            {location.pathname === '/product' && cartItems.length > 0 && (
-                                <span className="cart-badge">{cartItems.length}</span>
-                            )}
-                        </>
-                    )}
 
-                </div>
+
+
+                <div className="w-25 header-right">
+                    <div className="ms-auto position-relative me-3 ">
+                        {role !== 'admin' && (
+                            <>
+                                <i className={`fa-solid fa-cart-shopping fa-xl ${userData.profilephoto && "mt-3"} `} onClick={goCart} style={{ cursor: 'pointer', color: '#36506b' }}></i>
+                                {location.pathname === '/product' && cartItems.length > 0 && (
+                                    <span className="cart-badge">{cartItems.length}</span>
+                                )}
+
+                            </>
+                        )}
+                    </div>
                     <div className="button-container me-3">
                         {userData.profilephoto ?
-                        <img src={`http://localhost:3000${userData.profilephoto}`} className='profile-image' alt="Profile" />:
+                            <img src={`http://localhost:3000${userData.profilephoto}`} className='profile-image rounded-circle' alt="Profile" /> :
 
-                        <i className="fa-solid fa-user fa-xl" style={{ color: '#36506b' }}></i>
+                            <i className="fa-solid fa-user fa-xl" style={{ color: '#36506b' }}></i>
                         }
+                        {!token ? (<ul className={` hover-list`}>
+                            <li onClick={() => { navigate('/login') }}>Login</li>
+                        </ul>) : (
+                            <ul className={` hover-list`}>
+                                <li onClick={() => { navigate('/profile') }}>Your Profile</li>
 
-                        <ul className={` hover-list`}>
-                            <li onClick={() => { navigate('/profile') }}>Your Profile</li>
-
-                            {role === 'user' && <li onClick={() => { navigate('/orders') }}> Your Orders</li>}
-                            <li onClick={() => { localStorage.removeItem('token'); navigate('/login') }}>Logout</li>
-                        </ul>
+                                {role === 'user' && <li onClick={() => { navigate('/orders') }}> Your Orders</li>}
+                                <li onClick={() => { localStorage.removeItem('token'); navigate('/login') }}>Logout</li>
+                            </ul>
+                        )}
                     </div>
                 </div>
             </div>

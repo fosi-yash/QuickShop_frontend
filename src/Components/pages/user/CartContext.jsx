@@ -1,156 +1,127 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { getTokenWithExpiry } from "../../../utils/auth";
 
-
-
 const CartContext = createContext();
-
 export const useCart = () => useContext(CartContext);
-var loader = false
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([])
-    const [items, setItems] = useState([])
-     const [userData, setUserData] = useState({
-            name: "",
-            email: "",
-            birthdate: "",
-            mobilenumber: "",
-            profilephoto: ""
-        });
+    const [cartItems, setCartItems] = useState([]);
+    const [items, setItems] = useState([]);
+    const [userData, setUserData] = useState({
+        name: "",
+        email: "",
+        birthdate: "",
+        mobilenumber: "",
+        profilephoto: ""
+    });
 
-    const authtoken = getTokenWithExpiry('token')
+    const [authtoken, setAuthtoken] = useState(getTokenWithExpiry('token'));
+    const [searchBarText, setSearchBarText] = useState('');
+    const [category, setCategory] = useState([]);
 
-    const [searchBarText, setSearchBarText] = useState('')
-    const [category, setCategory] = useState([])
-
-    // ============================= fetching all products ========================>
-
-    async function fetchProducts(search) {
-
-        const searchProduct = search || ""
+    // ============================= fetching all products ========================>  
+    const fetchProducts = async (search = "") => {
+        const token = getTokenWithExpiry('token');
+        if (!token) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/product?search=${searchProduct}`, {
+            const response = await fetch(`http://localhost:3000/product?search=${search}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
-                    "auth-token": `${authtoken}`
+                    "auth-token": token
                 }
             });
             const data = await response.json();
             setItems(data);
-
         } catch (error) {
             console.error("Failed to fetch products:", error);
         }
+    };
 
-    }
-
-    // ============================= Add Product To Cart  ========================>
-
+    // ============================= Add Product To Cart  ========================>  
     const addtocart = async (product) => {
-        loader = true
+        const token = getTokenWithExpiry('token');
+        setCartItems(prev => [...prev, product]);
 
-        setCartItems((previousCart) => [...previousCart, product])
-        console.log(`${authtoken}`)
-        const response = await fetch('http://localhost:3000/addtocart', {
+        await fetch('http://localhost:3000/addtocart', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": `${authtoken}`
+                "auth-token": token
             },
             body: JSON.stringify(product)
-        })
-        const json = await response.json()
-        loader = false
-    }
+        });
+    };
 
-
-    // ============================= Remove Products from Cart========================>
-
+    // ============================= Remove Product ========================>
     const removeCart = async (id) => {
-        loader = true
-        const response = await fetch(`http://localhost:3000/removecart/${id}`, {
+        const token = getTokenWithExpiry('token');
+        await fetch(`http://localhost:3000/removecart/${id}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": `${authtoken}`
-            },
+                "auth-token": token
+            }
+        });
+        setCartItems(prev => prev.filter(item => item._id !== id));
+    };
 
-        })
-        setCartItems((previousCart) => previousCart.filter((item) => item._id !== id))
-        loader = false
-    }
-
-    // ============================= Remove All Products From The Cart ========================>
-
+    // ============================= Remove All Products ========================>
     const emptyCart = async () => {
-        loader = true
-        const response = await fetch('http://localhost:3000/removeall', {
+        const token = getTokenWithExpiry('token');
+        await fetch('http://localhost:3000/removeall', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
-                "auth-token": `${authtoken}`
+                "Content-Type": "application/json",
+                "auth-token": token
             }
-        })
-        setCartItems([])
-        loader = false
-    }
+        });
+        setCartItems([]);
+    };
 
-    // ======================= Fetching All Category Function==============================>
-
+    // ======================= Fetching All Category ===============================>
     const fetchCategory = async () => {
-        const categories = await fetch('http://localhost:3000/category', {
+        const token = getTokenWithExpiry('token');
+        const res = await fetch('http://localhost:3000/category', {
             method: 'GET',
             headers: {
-                'auth-token': authtoken,
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
+                
             }
-        })
-        const response = await categories.json()
-        setCategory(response)
-    }
+        });
+        const data = await res.json();
+        setCategory(data);
+    };
 
-    // ============================ Update User ==========================>
+    // ============================ Get User ==========================>
+    const fetchuser = async () => {
+        const token = getTokenWithExpiry('token');
+        const response = await fetch('http://localhost:3000/getuser', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            }
+        });
+        const data = await response.json();
+        setUserData({
+            name: data.name,
+            email: data.email,
+            birthdate: data.birthdate || "",
+            mobilenumber: data.mobilenumber || "",
+            profilephoto: data.profilephoto
+        });
+    };
 
-    const userUpdate = async () => {
-
-    }
-    // ============================ get User ==========================>
-
-     const fetchuser = async () => {
-         const response = await fetch('http://localhost:3000/getuser', {
-             method: 'GET',
-             headers: {
-                 'Content-Type': 'application/json',
-                 'auth-token': authtoken
-             }
-         })
-         const data = await response.json()
-         setUserData({
-             name: data.name,
-             email: data.email,
-             birthdate: data.birthdate,
-             mobilenumber: data.mobilenumber,
-             profilephoto:data.profilephoto
-         })
-     }
-    
-    
     // ============================= UseEffect ========================>
-
-
     useEffect(() => {
+        const token = getTokenWithExpiry('token');
+        setAuthtoken(token);
 
-        // ============================= fetching Cart ========================>
+        if (!token) return;
 
         const fetchcart = async () => {
-            const token = getTokenWithExpiry('token')
-
-            if (!token) return; // Exit early if no token is found
-
             try {
                 const response = await fetch('http://localhost:3000/cart', {
                     method: 'GET',
@@ -164,8 +135,7 @@ export const CartProvider = ({ children }) => {
                     const data = await response.json();
                     setCartItems(data);
                 } else {
-                    console.warn('Failed to fetch cart. Status:', response.status);
-                    setCartItems([]); // clear cart if unauthorized
+                    setCartItems([]);
                 }
             } catch (error) {
                 console.error('Error fetching cart:', error);
@@ -173,42 +143,26 @@ export const CartProvider = ({ children }) => {
         };
 
         fetchcart();
-
-       
-        
-    const fetchuser = async () => {
-        const response = await fetch('http://localhost:3000/getuser', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': authtoken
-            }
-        });
-        const data = await response.json();
-        setUserData({
-            name: data.name,
-            email: data.email,
-            birthdate: data.birthdate || "",
-            mobilenumber: data.mobilenumber || "",
-            profilephoto: data.profilephoto
-        });
-    };
-
-    if (authtoken) fetchuser(); // only call if token exists
-    // ============================= Calling fechCategory Function ========================>
-    
-    fetchCategory()
-}, []);
-
-   
-   
-
-
-
+        fetchuser();
+        fetchCategory();
+    }, []);
 
     return (
-        <CartContext.Provider value={{ items, category, cartItems, setSearchBarText, searchBarText, fetchProducts, emptyCart, addtocart, removeCart,userData,setUserData,fetchuser }}>
+        <CartContext.Provider value={{
+            items,
+            category,
+            cartItems,
+            setSearchBarText,
+            searchBarText,
+            fetchProducts,
+            emptyCart,
+            addtocart,
+            removeCart,
+            userData,
+            setUserData,
+            fetchuser
+        }}>
             {children}
         </CartContext.Provider>
-    )
-}
+    );
+};

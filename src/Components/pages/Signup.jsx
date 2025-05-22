@@ -20,7 +20,8 @@ const Signup = () => {
     const json = await response.json()
     console.log(json);
     if (json.success) {
-      localStorage.setItem('token', json.authtoken); // save token
+          setLocalstorage('token', json.authtoken, 100000000)
+      setLocalstorage('role', json.role, 100000000);// save token
       navigate("/product"); // go to product directly
     }
 

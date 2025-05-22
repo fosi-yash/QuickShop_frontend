@@ -4,14 +4,24 @@
 .profile-inner-div{
     background-color: #f5f7fa;
 }
-.profile-edit-icon{
+.profile-edit-icon-div{
         position: relative;
-    top: 80px;
-    right: 22px;
-    height: 10px;
+    top: 73px;
+    right: 28px;
+    height: 30px;
+    width: 34px;
+    border-radius: 50%;
+
+    background-color: white;
 
 }
 .profile-edit-icon:hover{
         color: rgb(71, 129, 184);
 
+}
+.profile-edit-icon{
+    color: #009fff;
+    font-size: 25px;
+    margin: auto auto;
+    margin-top: 5px;
 }

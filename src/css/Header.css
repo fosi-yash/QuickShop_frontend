@@ -64,6 +64,8 @@
  }
 
  .profile-image{
-  height: 32px;
+  height: 30px;
+  width: 30px;
   margin: auto !important;
+  cursor: pointer;
  }
