@@ -52,7 +52,8 @@ const Addproducts = () => {
   const handleImages = (e) => {
     setImages([...e.target.files]);
   };
-
+  
+  console.log(images)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (images.length === 0) return alert('Select at least one image');

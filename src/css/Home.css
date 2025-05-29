@@ -1,29 +1,50 @@
 .product-image {
-    width: 100%;
-    height: 250px; /* Adjust height as needed */
-    object-fit: contain; /* or use 'cover' if you want the image to fill the space */
-    transition: transform 0.3s ease;
-    padding: 10px;
-  }
-  .product-image:hover {
-    transform: scale(1.05); /* Optional zoom on hover */
-  }
-  .hero{
-    width: 100%;
-    height: 410px;
+  width: 100%;
+  height: 250px;
+  /* Adjust height as needed */
+  object-fit: contain;
+  /* or use 'cover' if you want the image to fill the space */
+  transition: transform 0.3s ease;
+  padding: 10px;
+}
 
-    /* background-image: url("banner.jpg"); */
+.product-image:hover {
+  transform: scale(1.05);
+  /* Optional zoom on hover */
+}
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
+.hero {
+  width: 100%;
+  height: 410px;
+
+  /* background-image: url("banner.jpg"); */
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+.product-card {
+  background-color: #f5f7fa;
+}
+
+.updated-section {
+  background-color: #567ea1;
+}
+
+@media (max-width:412px) {
+  .hero {
+
+    width: 100% !important;
+    height: 200px;
   }
 
-  .product-card{
-    background-color: #f5f7fa;
-  }
-  .updated-section{
-    background-color: #567ea1;
-  }
-
+ #products{
+  padding-top: 5px !important;
+ }
+.home-category-display{
+  display: flex;
+  flex-wrap: nowrap !important;
+}
+}

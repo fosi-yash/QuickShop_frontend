@@ -14,7 +14,15 @@ export const CartProvider = ({ children }) => {
         mobilenumber: "",
         profilephoto: ""
     });
-
+    const [particularProduct, setParticularProduct] = useState({
+        _id:"",
+        productName: "",
+        description: "",
+        prize: "",
+        stock: "",
+        category: "",
+        images: []
+    })
     const [authtoken, setAuthtoken] = useState(getTokenWithExpiry('token'));
     const [searchBarText, setSearchBarText] = useState('');
     const [category, setCategory] = useState([]);
@@ -114,6 +122,28 @@ export const CartProvider = ({ children }) => {
         });
     };
 
+    // =================================== Finding Product By ID ==============================>
+
+    const findproduct = async (id) => {
+        const response = await fetch(`http://localhost:3000/findproduct/${id}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": 'application/json',
+                "auth-token": authtoken
+            }
+        })
+        const product = await response.json()
+        setParticularProduct({
+            _id:product._id,
+            productName: product.productName,
+            description: product.description,
+            prize: product.prize,
+            stock: product.stock,
+            category: product.category,
+            images: product.images
+        })
+    }
+
     // ============================= UseEffect ========================>
     useEffect(() => {
         const token = getTokenWithExpiry('token');
@@ -152,6 +182,7 @@ export const CartProvider = ({ children }) => {
             items,
             category,
             cartItems,
+            fetchCategory,
             setSearchBarText,
             searchBarText,
             fetchProducts,
@@ -160,7 +191,9 @@ export const CartProvider = ({ children }) => {
             removeCart,
             userData,
             setUserData,
-            fetchuser
+            fetchuser,
+            findproduct,
+            particularProduct
         }}>
             {children}
         </CartContext.Provider>

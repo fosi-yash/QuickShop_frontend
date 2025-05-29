@@ -1,0 +1,20 @@
+.user-page-table th,
+.user-page-table td {
+  vertical-align: middle;
+}
+
+.user-page-h2 {
+  font-weight: 600;
+}
+.block-user-btn{
+  /* border: 1px solid rgb(255, 0, 0); */
+  color: white;
+  background-color: #d34747;
+  border-radius: 20px;
+  width: 110px;
+}
+
+.block-user-btn:hover{
+   background-color: #ef1717;
+   color: white;
+}

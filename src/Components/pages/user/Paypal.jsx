@@ -22,30 +22,29 @@ const Paypal = () => {
   const [selectedAddress, setSelectedAddress] = useState("")
   var loader = false
   const authtoken = getTokenWithExpiry('token')
-
   const role = getTokenWithExpiry('role')
-  if (role !== 'user' || !token) {
-    return navigate('/login')
-  }
+  const shippingCharge = shipping;
+  const CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
 
-  const shippingCharge = shipping
-
+  // =============== check authorize user and set cart state ==============>
 
   useEffect(() => {
+    if (role !== 'user' || !authtoken) {
+      return navigate('/login')
+    }
     loader = true
     setCart(Cart)
     loader = false
   }, [Cart])
 
+  // =============== calculate TotalAmount ==================>
 
   const totalAmount = cart.reduce((total, item) => {
     return total + (item.prize * item.quantity);
   }, 0)
   const finalAmount = totalAmount + Number(shipping);
 
-
-  const CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
-
+  // =============== Add style in Paypal Butttons ================>
   const style = {
     layout: 'vertical',
     shape: 'rect',
@@ -53,6 +52,8 @@ const Paypal = () => {
     label: 'paypal',
     height: 40
   };
+
+  // ================ Making Payment Order =======================>
 
   const createOrder = async (data, actions) => {
     loader = true
@@ -77,13 +78,14 @@ const Paypal = () => {
     }
   };
 
+  // ================== Approving Payment order =======================>
+
   const onApprove = (data, actions) => {
     return actions.order.capture().then(details => {
       console.log("Payment successful:", details);
-      console.log("Payment successful:", details.purchase_units[0].payments.captures[0].id
+      console.log("Payment successful:", details.purchase_units[0].payments.captures[0].id);
 
-      );
-
+      // ====================== Add Order function ==============================>
 
       (async () => {
         const orederNumber = `#ORD${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
@@ -118,9 +120,13 @@ const Paypal = () => {
     });
   }
 
+  // =============== redirect to cancel page when onCancel or Any error ============>
+
   const onCancel = () => {
     navigate('/cancel');
   };
+
+  // ================== Place Order button =========================>
 
   const onPay = () => {
     if (selectedAddress === "") {
@@ -137,7 +143,7 @@ const Paypal = () => {
 
 
   return (
-    <div style={{ backgroundColor: '#f1f1f1', height: '100vh' }}>
+    <div style={{ backgroundColor: '#f1f1f1', minHeight: '100vh' }}>
       <div className={` container p-3  `} >
 
 

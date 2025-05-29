@@ -1,4 +1,30 @@
 .edit-product-img{
-    height: 120px;
-    width: 140px;
+    height: 180px;
+    width: 200px;
+}
+
+.fa-circle-chevron-left{
+    margin-left: 40px;
+    position: static;
+    height: 25px;
+    margin:5px;
+    width: 25px;
+    margin-right: 5px;
+}
+.fa-circle-chevron-right{
+    position: static;
+    height: 25px;
+    margin:5px;
+    width: 25px;
+    margin-left: 5px;
+}
+.add-more-image-div{
+    width: 100px;
+    height: 160px;
+    margin-top: 12px;
+    border: 1px solid #0084ff;
+    background-color: aliceblue;
+}
+.add-more-image-icon{
+    margin:79px 35px ;
 }

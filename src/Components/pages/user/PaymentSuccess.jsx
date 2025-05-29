@@ -82,7 +82,7 @@ const PaymentSuccess = () => {
           src="/success.gif"
           alt="Payment Successful"
           className="mt-4 img-fluid mb-4"
-          style={{ maxWidth: '300px', }}
+          style={{ maxWidth: '300px', background:'transparent'}}
         />
         <h2 className="text-success">Payment Successful!</h2>
         <p className="text-muted">Thank you for your purchase.</p>

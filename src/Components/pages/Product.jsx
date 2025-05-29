@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from './user/CartContext';
 import Spinner from './Spinner';
-
 import '../../css/Product.css';
-
 import { getTokenWithExpiry } from '../../utils/auth';
 
 const Product = () => {
@@ -13,16 +11,20 @@ const Product = () => {
     const [cart, setCart] = useState([]);
     const token = getTokenWithExpiry('token');
     const role = getTokenWithExpiry('role');
+    const location = useLocation()
+   
 
-    const { items, fetchProducts, addtocart,fetchuser} = useCart();
+    const { items, fetchProducts, addtocart, fetchuser } = useCart();
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!token || role !== 'user') {
             navigate('/login');
         } else {
-            fetchProducts();
             fetchuser()
+            if (location.state !== 'from_home') {
+                fetchProducts();
+            }
         }
     }, []);
 
@@ -49,11 +51,15 @@ const Product = () => {
             _id: p._id,
             productName: p.productName,
             prize: (parseFloat(p.prize).toFixed(2) / 84.68).toFixed(2),
-            images: p.images,
+            images: p.images[0],
             quantity: quantity.qty,
             totalAmount: totalAmount
         });
     };
+    const viewProduct = async (productID) => {
+
+        navigate('/productdetail', { state: {productID,quantity} })
+    }
 
     return (
         <div className='product-main-div'>
@@ -65,7 +71,7 @@ const Product = () => {
                             <div key={p._id} className="col-md-3 mb-4">
                                 <div className="show-product p-3 border rounded">
                                     <div className='mx-2'>
-                                        <img src={`http://localhost:3000${p.images}`} style={{ transition: 'transform 0.3s ease' }} className='img img-fluid' alt="Mobile" />
+                                        <img src={`http://localhost:3000${p.images[0]}`} style={{ transition: 'transform 0.3s ease' }} onClick={() => { viewProduct(p._id) }} className='img img-fluid' alt="Mobile" />
                                     </div>
                                     <h5 className='show-product-heading'>
                                         {p.productName.length > 20 ? p.productName.slice(0, 20) + '...' : p.productName}
@@ -79,8 +85,8 @@ const Product = () => {
                                         ))}
                                     </select><br />
                                     <div className='d-flex justify-content-between mt-2'>
-                                        <button className="btn btn-primary" onClick={(e) => onBuy(e, p)} type="button">Buy Now</button>
-                                        <button className="btn btn-secondary" onClick={(e) => onCart(e, p)} type="button">Add to Cart</button>
+                                        <button className="btn buy-product-btn" onClick={(e) => onBuy(e, p)} type="button">Buy Now</button>
+                                        <button className="btn cart-btn" onClick={(e) => onCart(e, p)} type="button">Add to Cart</button>
                                     </div>
                                 </div>
                             </div>

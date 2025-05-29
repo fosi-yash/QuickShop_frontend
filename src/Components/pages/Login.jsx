@@ -48,9 +48,9 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (token) {
+    
       fetchuser()
-    }
+    
   }, [])
   return (
     <div style={{ backgroundColor: '#eaeef4', minHeight: '100vh', padding: '40px 0' }}>
@@ -102,7 +102,7 @@ const Login = () => {
                 placeholder="Password"
                 required
               />
-              <Link to='/' className='mx-2 mt-2'>Forget Password ?</Link>
+              <Link to='/passwordrecovery' className='mx-2 mt-2'>Forget Password ?</Link>
             </div>
 
             <button type="submit" className="btn btn-success w-100 mb-2">

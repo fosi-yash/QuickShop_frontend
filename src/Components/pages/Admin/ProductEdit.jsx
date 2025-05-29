@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getTokenWithExpiry } from '../../../utils/auth';
 import { useNavigate } from 'react-router';
 import { useAdmin } from './AdminContext';
@@ -21,6 +21,10 @@ const ProductEdit = () => {
   } = useAdmin();
   const [searchBarText, setSearchBarText] = useState('');
   const [show, setShow] = useState(false);
+  const [imageIndex, setImageIndex] = useState(0)
+  const [img, setImg] = useState(null)
+  const addimage = useRef(null)
+  const [insertedImage,setInsertedImage]=useState(null)
 
   // Check authentication and role
   useEffect(() => {
@@ -31,11 +35,14 @@ const ProductEdit = () => {
       if (role !== 'admin' || !token) {
         return navigate('/login');
       }
-      console.log(particularProduct[0]);
+      console.log(insertedImage);
+
     };
 
     checkAuthAndLoadProducts();
   }, [navigate]);
+
+
 
   // Sync products from context
   useEffect(() => {
@@ -55,6 +62,16 @@ const ProductEdit = () => {
       [name]: value,
     }));
   };
+
+  const addImage = () => {
+    if (addimage.current) {
+      addimage.current.click()
+    }
+  }
+  const handleImage = (e) => {
+
+    setInsertedImage(e.target.files[0])
+  }
 
   return (
     <div className="pb-3" style={{ backgroundColor: '#eaeef4', minHeight: '100vh' }}>
@@ -76,13 +93,18 @@ const ProductEdit = () => {
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: '#EAEEF4' }}>
           <div>
-            <div className="d-flex justify-content-center">
-              <img
-                src={`http://localhost:3000${particularProduct.images?.[0] || '/default-image.jpg'}`}
-                alt="productImage"
-                className="edit-product-img mt-1 mb-4"
-                onError={(e) => (e.target.src = '/default-image.jpg')}
-              />
+            <div className='d-flex justify-content-center'>
+              <div className='retrived_image'>
+                <i className="fa-solid fa-xl fa-circle-chevron-left" onClick={() => { imageIndex !== 0 && setImageIndex(imageIndex - 1) }}></i>
+                <img
+                  src={`http://localhost:3000${particularProduct.images?.[imageIndex] || '/default-image.jpg'}`}
+                  alt="productImage"
+                  className="edit-product-img mt-1 rounded mb-4"
+                  onError={(e) => (e.target.src = '/default-image.jpg')}
+                />
+                <i className="fa-solid fa-xl fa-circle-chevron-right" onClick={() => { particularProduct.images.length - 1 !== imageIndex && setImageIndex(imageIndex + 1) }}></i>
+              </div>
+              <div className='text-center rounded  add-more-image-div'><i className="fa-solid fa-plus add-more-image-icon fa-2xl" onClick={addImage}></i><p className='text-center'>Add more</p></div>
             </div>
             <div className="mb-3">
               <h6 className="form-label">Product Name:</h6>
@@ -138,17 +160,20 @@ const ProductEdit = () => {
                 ))}
               </select>
             </div>
+            <input className='d-none' ref={addimage} accept="image/*" type='file' name='images' onChange={(e) => { handleImage(e) }} />
           </div>
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: 'rgba(167,189,210,0.5)' }}>
-          <Button variant="secondary" onClick={() => setShow(false)}>
+          <Button variant="secondary" onClick={() => { setImageIndex(0); setShow(false) }}>
             Close
           </Button>
           <Button
             variant="primary"
             onClick={() => {
-              updateProduct(particularProduct._id);
+              updateProduct(particularProduct._id,insertedImage);
+              setImageIndex(0)
               setShow(false);
+              
             }}
           >
             Save Changes
@@ -175,20 +200,21 @@ const ProductEdit = () => {
               <div className="mt-1 d-flex p-1 pt-2" style={{ backgroundColor: '#f5f7fa' }}>
                 <div className="p-2">
                   <img
-                    src={`http://localhost:3000${item.images?.[0] || '/default-image.jpg'}`}
+                    src={`http://localhost:3000${item.images?.[0]}`}
                     style={{ height: '160px', width: '180px' }}
                     alt="product"
-                    onError={(e) => (e.target.src = '/default-image.jpg')}
+                  // onError={(e) => (e.target.src = '/default-image.jpg')}
                   />
                 </div>
                 <div className="w-75 d-flex flex-column justify-content-center text-start ms-3">
                   <h6>Product Name: {item.productName}</h6>
                   <h6 className="mt-2">Description: {item.description.slice(0, 50)}...</h6>
                   <h6 className="mt-2">
-                    Price: ₹{(parseFloat(item.prize).toFixed(2) / 85.62).toFixed(2)}
+                    Price: ${(parseFloat(item.prize).toFixed(2) / 85.62).toFixed(2)}
                   </h6>
                   <h6 className="mt-2">Stock: {item.stock}</h6>
                   <h6 className="mt-2">Category: {item.category?.categoryname}</h6>
+
                 </div>
                 <div className="d-flex justify-content-center align-items-center w-25">
                   <button
@@ -203,6 +229,7 @@ const ProductEdit = () => {
                     type="button"
                     onClick={() => {
                       findproduct(item._id);
+                      setImageIndex(0)
                       setShow(true);
                     }}
                   >

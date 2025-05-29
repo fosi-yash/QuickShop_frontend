@@ -85,3 +85,13 @@
 .dot.active {
   background-color: #717171;
 }
+
+@media (max-width:412px) {
+   .slider {
+    min-width: 100% !important;
+    height: 150px !important;
+  }
+  .slide-image{
+    height: 100%;
+  }
+}

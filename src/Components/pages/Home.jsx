@@ -5,7 +5,7 @@ import { useCart } from './user/CartContext'
 import Slider from './Slider'
 
 const Home = () => {
-  const {fetchProducts,category,setSearchBarText}=useCart()
+  const {fetchProducts,category,setSearchBarText,fetchCategory}=useCart()
   const navigate=useNavigate()
   const slidesData = [
   { image: '/slider_image/headphone_banner.jpg' },
@@ -15,6 +15,7 @@ const Home = () => {
 ];
   useEffect(()=>{
     setSearchBarText('')
+    fetchCategory()
   },[])
   return (
 
@@ -33,7 +34,7 @@ const Home = () => {
   <section id="products" className="py-5 ">
     <div className="container">
       <h2 className="text-center mb-4">Featured Products</h2>
-      <div className="row">
+      <div className="row home-category-display">
         {category.map((item,index)=>(
 
           <div key={item._id} className="col-md-4">
@@ -42,7 +43,7 @@ const Home = () => {
             <div className="card-body text-center">
               <h5 className="card-title">{item.categoryname}</h5>
               {/* <p className="card-text">$299</p> */}
-              <button onClick={()=>{  setSearchBarText(item.categoryname); navigate('/product');}} className="btn btn-outline-primary">Buy Now</button>
+              <button onClick={()=>{  setSearchBarText(item.categoryname); navigate('/product',{state:'from_home'});}} className="btn btn-outline-primary">Buy Now</button>
             </div>
           </div>
         </div>

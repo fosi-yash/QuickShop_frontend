@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { setLocalstorage } from '../../utils/auth'
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", confirmpassword: "" })
@@ -22,7 +23,7 @@ const Signup = () => {
     if (json.success) {
           setLocalstorage('token', json.authtoken, 100000000)
       setLocalstorage('role', json.role, 100000000);// save token
-      navigate("/product"); // go to product directly
+      navigate("/login"); // go to product directly
     }
 
     else {

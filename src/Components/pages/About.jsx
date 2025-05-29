@@ -3,7 +3,7 @@ import logo from '../../assets/images/Logo.png'
 
 const About = () => {
   return (
-    <div style={{backgroundColor:'#eaeef4'}}>
+    <div style={{backgroundColor:'#eaeef4',minHeight:'100vh'}}>
     <div className="container my-5">
       <h2 className="text-center mb-4" style={{ color: '#36506B' }}>About QuickShop</h2>
 

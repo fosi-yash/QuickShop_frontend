@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Home from './Components/pages/Home';
 import Signup from './Components/pages/Signup';
 import Login from './Components/pages/Login';
-import Paypal from './Components/pages/Paypal';
+import Paypal from './Components/pages/user/Paypal';
 import ValidUser from './Components/pages/user/ValidUser';
 import Cart from './Components/pages/user/Cart';
 import Product from './Components/pages/Product';
@@ -23,6 +23,9 @@ import Contact from './Components/pages/Contact';
 import About from './Components/pages/About';
 import { AdminProvider } from './Components/pages/Admin/AdminContext';
 import Profile from './Components/pages/user/Profile';
+import ProductDetail from './Components/pages/user/ProductDetail';
+import User from './Components/pages/Admin/User';
+import ForgetPassword from './Components/pages/ForgetPassword';
 
 
 
@@ -49,6 +52,7 @@ const AppWrapper = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/product" element={<ValidUser><Product /></ValidUser>} />
+        <Route path="/productdetail" element={<ValidUser><ProductDetail /></ValidUser>} />
         <Route path="/cart" element={<ValidUser><Cart /></ValidUser>} />
         <Route path="/checkout" element={<ValidUser><Paypal/></ValidUser>} />
         <Route path="/success" element={<ValidUser><PaymentSuccess /></ValidUser>} />
@@ -58,6 +62,8 @@ const AppWrapper = () => {
         <Route path="/addproducts" element={<ValidUser><Addproducts /></ValidUser>} />
         <Route path="/productedit" element={<ValidUser><ProductEdit /></ValidUser>} />
         <Route path="/dashboard" element={<ValidUser><Dashboard /></ValidUser>} />
+        <Route path="/users" element={<ValidUser><User /></ValidUser>} />
+        <Route path="/passwordrecovery" element={<ForgetPassword />} />
         
       </Routes>
       </ShippingProvider>

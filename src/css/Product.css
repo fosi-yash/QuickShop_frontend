@@ -2,14 +2,14 @@
 
 .product-main-div{
     background-color: #eaeef4;
-    height: 100vh;
+    height: 100%;
 }
 .show-product{
     background-color: #f5f7fa;
 }
 /* Buy Now Button */
 .buy-product-btn {
-  background-color: #FF6F00;     /* Bright orange */
+  background-color: #FF6F00 !important;     /* Bright orange */
   color: #ffffff;
   border: none;
   padding: 0px 10px;
@@ -21,13 +21,13 @@
 }
 
 .buy-product-btn:hover {
-  background-color: #e65c00;     /* Darker orange on hover */
+  background-color: #e65c00 !important;     /* Darker orange on hover */
   transform: scale(1.03);
 }
 
 /* Add to Cart Button */
 .cart-btn {
-  background-color: #28A745;     /* Green */
+  background-color: #28A745 !important;     /* Green */
   color: #ffffff;
   border: none;
   padding: 8px 10px;
@@ -39,7 +39,7 @@
 }
 
 .cart-btn:hover {
-  background-color: #218838;     /* Darker green on hover */
+  background-color: #218838 !important;     /* Darker green on hover */
   transform: scale(1.03);
 }
 

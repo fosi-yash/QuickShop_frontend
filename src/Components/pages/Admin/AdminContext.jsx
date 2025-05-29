@@ -144,7 +144,7 @@ export const AdminProvider = ({ children }) => {
 
     // ============================== Update Product ================================>
 
-       const updateProduct = async (_id) => {
+       const updateProduct = async (_id,image) => {
   const id = _id;
   const formData = new FormData();
   formData.append('productName', particularProduct.productName);
@@ -157,7 +157,7 @@ export const AdminProvider = ({ children }) => {
       ? particularProduct.category._id
       : particularProduct.category
   );
-  formData.append('images', particularProduct.images);
+  formData.append('images', image);
 
   try {
     const response = await fetch(`http://localhost:3000/updateproduct/${id}`, {
@@ -176,8 +176,30 @@ export const AdminProvider = ({ children }) => {
   }
 };
 
+// =========================== user block and unblock =================>
+
+    const userBlock = async (id, Block) => {
+  const newBlockStatus = !Block;
+
+  const response = await fetch(`http://localhost:3000/updateblockeduser/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': authtoken,
+    },
+    body: JSON.stringify({ block: newBlockStatus }),
+  });
+
+  const data = await response.json();
+  console.log(data);
+
+  fetchusers();
+};
+
+
 
     useEffect(() => {
+        
         fetchProducts()
         fetchorder()
         fetchusers()
@@ -185,7 +207,7 @@ export const AdminProvider = ({ children }) => {
         fetchcategories()
     }, [])
     return (
-        <AdminContext.Provider value={{ product, order, user, chartdata, fetchProducts, productRemove, findproduct,particularProduct,setParticularProduct ,categories, updateProduct}}>
+        <AdminContext.Provider value={{ product, order, user, chartdata, fetchProducts, productRemove, findproduct,particularProduct,setParticularProduct ,categories, updateProduct, fetchusers , userBlock}}>
             {children}
         </AdminContext.Provider>
     )
