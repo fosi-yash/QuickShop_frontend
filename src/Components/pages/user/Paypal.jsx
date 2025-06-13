@@ -25,6 +25,7 @@ const Paypal = () => {
   const role = getTokenWithExpiry('role')
   const shippingCharge = shipping;
   const CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
+  const API_URL = import.meta.env.VITE_BACKEND_API;
 
   // =============== check authorize user and set cart state ==============>
 
@@ -58,7 +59,7 @@ const Paypal = () => {
   const createOrder = async (data, actions) => {
     loader = true
     try {
-      const response = await fetch('http://localhost:3000/createOrder', {
+      const response = await fetch('/api/createOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +90,7 @@ const Paypal = () => {
 
       (async () => {
         const orederNumber = `#ORD${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
-        const response = await fetch('http://localhost:3000/addorder', {
+        const response = await fetch('/api/addorder', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -12,6 +12,7 @@ const Header = () => {
     const navigate = useNavigate()
     const role = getTokenWithExpiry('role');
     const token = getTokenWithExpiry('token')
+    const API_URL = import.meta.env.VITE_BACKEND_API;
 
     useEffect(() => {
         fetchProducts(searchBarText)
@@ -57,16 +58,15 @@ const Header = () => {
                         {role !== 'admin' && (
                             <>
                                 <i className={`fa-solid fa-cart-shopping fa-xl profile-icon ${userData.profilephoto && "mt-3"} `} onClick={goCart} style={{ cursor: 'pointer', color: '#36506b' }}></i>
-                                {location.pathname === '/product' || location.pathname === '/productdetail' && cartItems.length > 0 ? (
+                                {(location.pathname === '/product' || location.pathname === '/productdetail') && cartItems.length > 0 ? (
                                     <span className="cart-badge">{cartItems.length}</span>
                                 ):("")}
-
                             </>
                         )}
                     </div>
                     <div className="button-container me-3">
                         {userData.profilephoto ?
-                            <img src={`http://localhost:3000${userData.profilephoto}`} className='profile-image rounded-circle' alt="Profile" /> :
+                            <img src={`${API_URL}${userData.profilephoto}`} className='profile-image rounded-circle' alt="Profile" /> :
 
                             <i className="fa-solid fa-user profile-icon  fa-xl" style={{ color: '#36506b' }}></i>
                         }

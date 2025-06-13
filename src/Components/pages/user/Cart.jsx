@@ -8,6 +8,7 @@ import { getTokenWithExpiry } from '../../../utils/auth'
 const Cart = () => {
     const { cartItems, emptyCart, removeCart } = useCart()
     const [products, setProducts] = useState([])
+    const API_URL = import.meta.env.VITE_BACKEND_API;
     const navigate = useNavigate()
     const token = getTokenWithExpiry('token');
     const role = getTokenWithExpiry('role')
@@ -48,7 +49,7 @@ const Cart = () => {
 
 
                                     <div className='p-2 ' >
-                                        <img src={`http://localhost:3000${item.images}`} style={{ height: '200px', width: '220px' }} alt="" />
+                                        <img src={`${API_URL}${item.images}`} style={{ height: '200px', width: '220px' }} alt="" />
                                     </div>
                                     <div className=' w-75 mt-3'>
 

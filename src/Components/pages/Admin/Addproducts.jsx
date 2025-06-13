@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getTokenWithExpiry } from '../../../utils/auth';
 import { useNavigate } from 'react-router';
+const API_URL = import.meta.env.BACKEND;
 
 const Addproducts = () => {
   const [data, setData] = useState({
@@ -30,7 +31,7 @@ const Addproducts = () => {
   }, []);
 
   const fetchcategories = async () => {
-    const response = await fetch('http://localhost:3000/category', {
+    const response = await fetch('/api/category', {
       method: 'GET',
       headers: {
         'auth-token': token,
@@ -68,7 +69,7 @@ const Addproducts = () => {
 
     images.forEach((img) => formData.append('images', img)); // multiple images
 
-    const response = await fetch('http://localhost:3000/addproduct', {
+    const response = await fetch('/api/addproduct', {
       method: 'POST',
       headers: {
         'auth-token': token
@@ -105,7 +106,7 @@ const Addproducts = () => {
     formData.append('description', categorydata.description);
     formData.append('images', categoryimage);
 
-    const response = await fetch('http://localhost:3000/addcategory', {
+    const response = await fetch('/api/addcategory', {
       method: 'POST',
       headers: {
         'auth-token': token

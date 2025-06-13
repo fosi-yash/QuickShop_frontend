@@ -32,7 +32,7 @@ export const AdminProvider = ({ children }) => {
         const searchProduct = search || ""
 
         try {
-            const response = await fetch(`http://localhost:3000/product?search=${searchProduct}`, {
+            const response = await fetch(`/api/product?search=${searchProduct}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const AdminProvider = ({ children }) => {
 // =================================== Fetch All Orders ==============================>
 
     const fetchorder = async () => {
-        const response = await fetch('http://localhost:3000/allorders', {
+        const response = await fetch('/api/allorders', {
             method: 'GET',
             headers: {
                 "Content-Type": 'application/json',
@@ -65,7 +65,7 @@ export const AdminProvider = ({ children }) => {
 // =================================== Fetch All Users ==============================>
 
     const fetchusers = async () => {
-        const response = await fetch('http://localhost:3000/getusers', {
+        const response = await fetch('/api/getusers', {
             method: 'GET',
             headers: {
                 "Content-Type": 'application/json',
@@ -79,7 +79,7 @@ export const AdminProvider = ({ children }) => {
 // =================================== Fetching chart data ==============================>
 
     const fetchchartdata = async () => {
-        const response = await fetch('http://localhost:3000/monthly-summary', {
+        const response = await fetch('/api/monthly-summary', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ export const AdminProvider = ({ children }) => {
 // =================================== Remove Product by ID ==============================>
 
     const productRemove = async (id) => {
-        const response = await fetch(`http://localhost:3000/removeproduct/${id}`, {
+        const response = await fetch(`/api/removeproduct/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export const AdminProvider = ({ children }) => {
 // =================================== Finding Product By ID ==============================>
 
     const findproduct = async (id) => {
-        const response = await fetch(`http://localhost:3000/findproduct/${id}`, {
+        const response = await fetch(`/api/findproduct/${id}`, {
             method: 'GET',
             headers: {
                 "Content-Type": 'application/json',
@@ -130,7 +130,7 @@ export const AdminProvider = ({ children }) => {
     // ============================== Fetching All Category ==========================>
         const fetchcategories=async()=> {
 
-        const response = await fetch('http://localhost:3000/category', {
+        const response = await fetch('/api/category', {
             method: 'GET',
             headers: {
                 "auth-token": authtoken,
@@ -160,7 +160,7 @@ export const AdminProvider = ({ children }) => {
   formData.append('images', image);
 
   try {
-    const response = await fetch(`http://localhost:3000/updateproduct/${id}`, {
+    const response = await fetch(`/api/updateproduct/${id}`, {
       method: 'PUT',
       headers: {
         'auth-token': authtoken,
@@ -181,7 +181,7 @@ export const AdminProvider = ({ children }) => {
     const userBlock = async (id, Block) => {
   const newBlockStatus = !Block;
 
-  const response = await fetch(`http://localhost:3000/updateblockeduser/${id}`, {
+  const response = await fetch(`/api/updateblockeduser/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

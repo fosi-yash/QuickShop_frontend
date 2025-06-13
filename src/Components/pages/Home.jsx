@@ -7,11 +7,11 @@ import Slider from './Slider'
 const Home = () => {
   const {fetchProducts,category,setSearchBarText,fetchCategory}=useCart()
   const navigate=useNavigate()
+const API_URL = import.meta.env.VITE_BACKEND_API;
   const slidesData = [
   { image: '/slider_image/headphone_banner.jpg' },
   { image: '/slider_image/mobile_banner.jpg' },
   { image: '/slider_image/watch_banner.jpg' },
-
 ];
   useEffect(()=>{
     setSearchBarText('')
@@ -39,7 +39,7 @@ const Home = () => {
 
           <div key={item._id} className="col-md-4">
           <div className="card product-card mb-4">
-            <img src={`http://localhost:3000${item.images}`}className=" product-image" alt={item.categoryname} />
+            <img src={`${API_URL}${item.images}`}className=" product-image" alt={item.categoryname} />
             <div className="card-body text-center">
               <h5 className="card-title">{item.categoryname}</h5>
               {/* <p className="card-text">$299</p> */}

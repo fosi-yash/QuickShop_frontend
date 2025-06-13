@@ -31,7 +31,7 @@ const Address = ({ onselectedaddress }) => {
   // ======================== fetch adress function ========================>
 
   async function fetchaddress() {
-    const response = await fetch('http://localhost:3000/addresses', {
+    const response = await fetch('/api/addresses', {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,6 @@ const Address = ({ onselectedaddress }) => {
     })
     const addresses = await response.json()
     setAddress(addresses)
-    console.log(addresses)
   }
 
   //  ==================== useEffect to calling fetchaddress function ==================>
@@ -62,7 +61,7 @@ const Address = ({ onselectedaddress }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     getDistanceFromLatLonInKm()
-    const response = await fetch('http://localhost:3000/addaddress', {
+    const response = await fetch('/api/addaddress', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,7 +128,7 @@ const Address = ({ onselectedaddress }) => {
 
   const removeAddress = async (e, id) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3000/address/${id}`, {
+    const response = await fetch(`/api/address/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -144,21 +143,21 @@ const Address = ({ onselectedaddress }) => {
 
   // function to change selected address & calling getCoordinates ==========>
 
-  const onAddressSelect = async (e, index) => {
+  const onAddressSelect = async (e, user) => {
     setSelectedAddress(e.target.value);
     onselectedaddress(e.target.value);
 
-    if (address.length > 0) {
-      const user = address[index];
       const fullAddress = user.display_name || ` ${user.city}, ${user.state}`;
       console.log(fullAddress);
 
       try {
-        await getCoordinates(fullAddress); // <-- await + try-catch to handle failure
+        const {lat,lon} = await getCoordinates(fullAddress);
+        await     getDistanceFromLatLonInKm(lat,lon)
+ // <-- await + try-catch to handle failure
       } catch (error) {
         console.error("Failed to convert address to coordinates:", error.message);
         alert("Could not get coordinates for the selected address. Please check the address.");
-      }
+      
     }
   };
 
@@ -196,7 +195,7 @@ const Address = ({ onselectedaddress }) => {
           address.map((user, index) => (
             <div className="container d-flex bg-white mt-2 rounded" key={user._id}>
               <div>
-                <input className='mx-3 mt-3' style={{ height: '25px', width: '20px', }} value={user._id} checked={selectedAddress === user._id} onChange={(e) => { onAddressSelect(e, index) }} type="radio" name="select" id="select" required />
+                <input className='mx-3 mt-3' style={{ height: '25px', width: '20px', }} value={user._id} checked={selectedAddress === user._id} onChange={(e) => { onAddressSelect(e, user) }} type="radio" name="select" id="select" required />
               </div>
               <div className="w-75 mx-3">
                 <div className='d-flex '>

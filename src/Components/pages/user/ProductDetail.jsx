@@ -6,6 +6,7 @@ import '../../../css/ProductDetail.css';
 const ProductDetail = () => {
     const location = useLocation();
     const { productID, quantity } = location.state;
+    const API_URL = import.meta.env.VITE_BACKEND_API;
     const { findproduct,addtocart, particularProduct } = useCart();
     const [qty,setQty]=useState(1)
     const [selectedImage, setSelectedImage] = useState(0);
@@ -65,7 +66,7 @@ const ProductDetail = () => {
                             {particularProduct.images?.map((img, index) => (
                                 <li key={index}>
                                     <img
-                                        src={`http://localhost:3000${img}`}
+                                        src={`${API_URL}${img}`}
                                         alt={`Thumbnail ${index}`}
                                         className={`img-thumbnail ${selectedImage === index ? 'border-primary' : ''}`}
                                         style={{
@@ -86,7 +87,7 @@ const ProductDetail = () => {
                     {/* Main Product Image */}
                     <div className="mx-4 text-center">
                         <img
-                            src={`http://localhost:3000${particularProduct.images?.[selectedImage]}`}
+                            src={`${API_URL}${particularProduct.images?.[selectedImage]}`}
                             alt="Product"
                             className="img-fluid rounded shadow product-detail-main-image"
                             style={{ objectFit: 'contain' }}

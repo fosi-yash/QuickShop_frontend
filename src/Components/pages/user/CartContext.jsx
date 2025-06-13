@@ -33,7 +33,7 @@ export const CartProvider = ({ children }) => {
         if (!token) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/product?search=${search}`, {
+            const response = await fetch(`/api/product?search=${search}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const CartProvider = ({ children }) => {
         const token = getTokenWithExpiry('token');
         setCartItems(prev => [...prev, product]);
 
-        await fetch('http://localhost:3000/addtocart', {
+        await fetch('/api/addtocart', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const CartProvider = ({ children }) => {
     // ============================= Remove Product ========================>
     const removeCart = async (id) => {
         const token = getTokenWithExpiry('token');
-        await fetch(`http://localhost:3000/removecart/${id}`, {
+        await fetch(`/api/removecart/${id}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export const CartProvider = ({ children }) => {
     // ============================= Remove All Products ========================>
     const emptyCart = async () => {
         const token = getTokenWithExpiry('token');
-        await fetch('http://localhost:3000/removeall', {
+        await fetch('/api/removeall', {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export const CartProvider = ({ children }) => {
     // ======================= Fetching All Category ===============================>
     const fetchCategory = async () => {
         const token = getTokenWithExpiry('token');
-        const res = await fetch('http://localhost:3000/category', {
+        const res = await fetch('/api/category', {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export const CartProvider = ({ children }) => {
     // ============================ Get User ==========================>
     const fetchuser = async () => {
         const token = getTokenWithExpiry('token');
-        const response = await fetch('http://localhost:3000/getuser', {
+        const response = await fetch('/api/getuser', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export const CartProvider = ({ children }) => {
     // =================================== Finding Product By ID ==============================>
 
     const findproduct = async (id) => {
-        const response = await fetch(`http://localhost:3000/findproduct/${id}`, {
+        const response = await fetch(`/api/findproduct/${id}`, {
             method: 'GET',
             headers: {
                 "Content-Type": 'application/json',
@@ -153,7 +153,7 @@ export const CartProvider = ({ children }) => {
 
         const fetchcart = async () => {
             try {
-                const response = await fetch('http://localhost:3000/cart', {
+                const response = await fetch('/api/cart', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

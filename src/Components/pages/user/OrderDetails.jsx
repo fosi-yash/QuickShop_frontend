@@ -20,7 +20,7 @@ const OrderDetails = () => {
     }
     const fetchOrder = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/orderdetails/${id}`, {
+            const response = await fetch(`/api/orderdetails/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const OrderDetails = () => {
         if (!final) {
             return
         }
-        const response = await fetch('http://localhost:3000/refund', {
+        const response = await fetch('/api/refund', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const OrderDetails = () => {
         })
         const itemstatus = await response.json()
         console.log(itemstatus)
-        const update = await fetch(`http://localhost:3000/updateorder/${order._id}`, {
+        const update = await fetch(`/api/updateorder/${order._id}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',

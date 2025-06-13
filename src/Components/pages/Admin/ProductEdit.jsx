@@ -46,6 +46,7 @@ const ProductEdit = () => {
 
   // Sync products from context
   useEffect(() => {
+    // fetchProducts()
     setAllProducts(product);
   }, [product]);
 

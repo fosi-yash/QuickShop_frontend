@@ -12,6 +12,7 @@ const Product = () => {
     const token = getTokenWithExpiry('token');
     const role = getTokenWithExpiry('role');
     const location = useLocation()
+    const API_URL = import.meta.env.VITE_BACKEND_API;
    
 
     const { items, fetchProducts, addtocart, fetchuser } = useCart();
@@ -71,7 +72,7 @@ const Product = () => {
                             <div key={p._id} className="col-md-3 mb-4">
                                 <div className="show-product p-3 border rounded">
                                     <div className='mx-2'>
-                                        <img src={`http://localhost:3000${p.images[0]}`} style={{ transition: 'transform 0.3s ease' }} onClick={() => { viewProduct(p._id) }} className='img img-fluid' alt="Mobile" />
+                                        <img src={`${API_URL}${p.images[0]}`} style={{ transition: 'transform 0.3s ease' }} onClick={() => { viewProduct(p._id) }} className='img img-fluid' alt="Mobile" />
                                     </div>
                                     <h5 className='show-product-heading'>
                                         {p.productName.length > 20 ? p.productName.slice(0, 20) + '...' : p.productName}

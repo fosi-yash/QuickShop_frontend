@@ -13,7 +13,7 @@ const Orders = () => {
       return navigate('/login')
     }
     async function fetchorders() {
-      const response = await fetch('http://localhost:3000/userorders', {
+      const response = await fetch('/api/userorders', {
         method: 'GET',
         headers: {
 

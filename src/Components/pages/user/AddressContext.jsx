@@ -14,7 +14,7 @@ export const ShippingProvider = ({ children }) => {
     city: "",
     state: "",
     landmark: "",
-    display_name:""
+    display_name: ""
   });
   const [shipping, setShipping] = useState(0)
 
@@ -28,9 +28,10 @@ export const ShippingProvider = ({ children }) => {
     Longitude: '77.0299194'
   });
 
+  // =========================== Fetch User Location Using geolocation ================> 
 
   const userLocation = () => {
-    console.log('hello Location')
+   
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
@@ -49,7 +50,7 @@ export const ShippingProvider = ({ children }) => {
               pincode: location.address.postcode,
               city: `${location.address.suburb || ""}, ${location.address.county.replace("Taluka", " ") || ""}, ${location.address.state_district || ""}`,
               state: `${location.address.state}, ${location.address.country}`,
-              display_name:location.display_name
+              display_name: location.display_name
             });
           } catch (error) {
             console.log('Error in fetching location', error);
@@ -60,33 +61,33 @@ export const ShippingProvider = ({ children }) => {
   };
   // ================== convert user addresss to coordinate =================>
 
+
+
   const getCoordinates = async (address) => {
-  const res = await fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
-  );
-  const data = await res.json();
-  console.log(data)
-  if (data && data.length > 0) {
-    setUser({
-      Latitude: parseFloat(data[0].lat),
-    Longitude: parseFloat(data[0].lon)
-    })
-    getDistanceFromLatLonInKm()
-    // return {
-    //   lat: parseFloat(data[0].lat),
-    //   lng: parseFloat(data[0].lon),
-    // };
-  } else {
-    throw new Error("Unable to geocode address");
-  }
-};
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
+    );
+    const data = await res.json();
+    console.log(address)
+    console.log(data)
+    if (data && data.length > 0) {
+      const lat = parseFloat(data[0].lat);
+      const lon = parseFloat(data[0].lon);
+      console.log(lat)
+      console.log(lon)
+      return { lat, lon }; // ✅ return values
+    } else {
+      throw new Error("Unable to geocode address");
+    }
+  };
+
 
   // Haversine formula to calculate distance between two lat/long points ======>
 
-  const getDistanceFromLatLonInKm = () => {
+  const getDistanceFromLatLonInKm = async (lat, lon) => {
     const R = 6371; // Radius of the earth in km
-    const dLat = deg2rad(seller.Latitude - user.Latitude);
-    const dLon = deg2rad(seller.Longitude - user.Longitude);
+    const dLat = deg2rad(seller.Latitude - lat || user.Latitude);
+    const dLon = deg2rad(seller.Longitude - lon || user.Longitude);
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(deg2rad(user.Latitude)) *
@@ -108,14 +109,12 @@ export const ShippingProvider = ({ children }) => {
 
   // ================= useEffect to call userLocation ==============>
 
-  // useEffect(() => {
-  //   // Optionally call userLocation to fetch user's location when component mounts
-  //   userLocation();
-    
-  // }, [user.Latitude, user.Longitude, seller.Latitude, seller.Longitude]); // Dependency array for re-calculation
+  useEffect(() => {
+    userLocation();
+  }, []);
 
   return (
-    <AddressContext.Provider value={{ getDistanceFromLatLonInKm,getCoordinates, shipping, userLocation, useraddress ,setUseraddress}}>
+    <AddressContext.Provider value={{ getDistanceFromLatLonInKm, getCoordinates, shipping, userLocation, useraddress, setUseraddress }}>
       {children}
     </AddressContext.Provider>
   );

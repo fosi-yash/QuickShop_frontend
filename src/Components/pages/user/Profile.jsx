@@ -6,6 +6,7 @@ import { getTokenWithExpiry } from '../../../utils/auth';
 const Profile = () => {
   const authtoken = getTokenWithExpiry('token');
   const { userData, setUserData, fetchuser } = useCart();
+  const API_URL = import.meta.env.VITE_BACKEND_API;
   const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState('');
   const profileref = useRef(null);
@@ -25,7 +26,7 @@ const Profile = () => {
       formData.append('image', imageFile);
     }
 
-    const response = await fetch('http://localhost:3000/updateprofile', {
+    const response = await fetch('/api/updateprofile', {
       method: 'PUT',
       headers: {
         'auth-token': authtoken
@@ -46,7 +47,7 @@ const Profile = () => {
         const formData = new FormData();
         formData.append('image', imageFile);
 
-        const response = await fetch('http://localhost:3000/updateprofile', {
+        const response = await fetch('/api/updateprofile', {
           method: 'PUT',
           headers: {
             'auth-token': authtoken
@@ -82,7 +83,7 @@ const Profile = () => {
                 {userData.profilephoto ? (
                   <>
                     <img
-                      src={`http://localhost:3000${userData.profilephoto}`}
+                      src={`${API_URL}${userData.profilephoto}`}
                       alt="Profile"
                       className="rounded-circle"
                       width="100"
